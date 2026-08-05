@@ -42,8 +42,22 @@ window.s = function () {
   msg.value = "";
 }
 
-onChildAdded(ref(db,"m"),d=>{
-  chat.innerHTML+=`<div><b>${d.val().n}:</b> ${d.val().t}</div>`;
+onChildAdded(ref(db, "m"), d => {
+  const m = d.val();
+
+  const date = new Date(m.time || Date.now());
+  const h = String(date.getHours()).padStart(2, "0");
+  const min = String(date.getMinutes()).padStart(2, "0");
+
+  chat.innerHTML += `
+    <div style="margin:6px 0">
+      <b>${m.n}</b>
+      <span style="color:gray;font-size:12px">${h}:${min}</span><br>
+      ${m.t}
+    </div>
+  `;
+
+  chat.scrollTop = chat.scrollHeight;
 });
 </script>
 
