@@ -30,10 +30,16 @@ if(!n){
   localStorage.setItem("n",n);
 }
 
-window.s=function(){
-  if(!msg.value)return;
-  push(ref(db,"m"),{n:n,t:msg.value});
-  msg.value="";
+window.s = function () {
+  if (!msg.value.trim()) return;
+
+  push(ref(db, "m"), {
+    n: n,
+    t: msg.value,
+    time: Date.now()
+  });
+
+  msg.value = "";
 }
 
 onChildAdded(ref(db,"m"),d=>{
