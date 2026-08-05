@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
-<body style="background:#0f172a;color:white;font-family:sans-serif">
+<body style="
+margin:0;
+background:#17212b;
+font-family:Arial,sans-serif;
+color:white;
+">
 
 <div id="chat"
 style="
 height:85vh;
 overflow:auto;
-padding:10px;
-background:#17212b;">
+padding:12px;
+box-sizing:border-box;
+">
 </div>
 
 <div style="
@@ -78,35 +84,49 @@ onChildAdded(ref(db, "m"), d => {
   const h = String(date.getHours()).padStart(2, "0");
   const min = String(date.getMinutes()).padStart(2, "0");
 
+  const my = m.n === n;
+
   chat.innerHTML += `
-    <div style="display:flex;margin:8px 0;">
+  <div style="
+    display:flex;
+    justify-content:${my ? "flex-end" : "flex-start"};
+    margin:8px;
+  ">
+
+    <div style="
+      background:${my ? "#2ea6ff" : "#2b2b2b"};
+      color:white;
+      padding:10px 14px;
+      border-radius:18px;
+      max-width:75%;
+      word-break:break-word;
+      box-shadow:0 2px 6px rgba(0,0,0,.3);
+    ">
+
       <div style="
-        background:#2b5278;
-        color:white;
-        padding:10px 14px;
-        border-radius:18px;
-        max-width:75%;
-        word-break:break-word;
-        box-shadow:0 2px 5px rgba(0,0,0,.3);
+        font-weight:bold;
+        color:${my ? "#ffffff" : "#8fd3ff"};
+        margin-bottom:4px;
       ">
-        <div style="font-weight:bold;color:#8fd3ff">
-          ${m.n}
-        </div>
-
-        <div style="margin-top:4px">
-          ${m.t}
-        </div>
-
-        <div style="
-          text-align:right;
-          font-size:11px;
-          color:#cfcfcf;
-          margin-top:6px;
-        ">
-          ${h}:${min}
-        </div>
+        ${m.n}
       </div>
+
+      <div>
+        ${m.t}
+      </div>
+
+      <div style="
+        text-align:right;
+        font-size:11px;
+        color:#dddddd;
+        margin-top:6px;
+      ">
+        ${h}:${min}
+      </div>
+
     </div>
+
+  </div>
   `;
 
   chat.scrollTop = chat.scrollHeight;
