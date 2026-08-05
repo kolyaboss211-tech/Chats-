@@ -66,7 +66,13 @@ const app = initializeApp({
 });
 
 const db=getDatabase(app);
+import { set, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
+set(ref(db, "online/" + n), true);
+
+window.addEventListener("beforeunload", () => {
+  remove(ref(db, "online/" + n));
+});
 let n=localStorage.getItem("n");
 if(!n){
   n=prompt("Твой ник:");
@@ -101,9 +107,7 @@ onChildAdded(ref(db, "m"), d => {
     justify-content:${my ? "flex-end" : "flex-start"};
     margin:8px;
   ">
-window.addEventListener("beforeunload",()=>{
-  remove(ref(db,"online/"+n));
-});
+  
     <div style="
       background:${my ? "#2ea6ff" : "#2b2b2b"};
       color:white;
@@ -115,7 +119,7 @@ window.addEventListener("beforeunload",()=>{
       font-size:30px;
       line-height:1.4;
 ">
-set(ref(db,"typing/"+n),true);
+
       <div style="
         font-size:30px;
         font-weight:700;
@@ -125,14 +129,11 @@ set(ref(db,"typing/"+n),true);
       
         ${m.n}
       </div>
-set(ref(db,"typing/"+n),false);
+
       <div>
         ${m.t}
       </div>
-<button onclick="msg.value+='😏'">😏</button>
-<button onclick="msg.value+='😂'">😂</button>
-<button onclick="msg.value+='❤️'">❤️</button>
-<button onclick="msg.value+='👍'">👍</button>
+
       <div style="
 display:flex;
 justify-content:flex-end;
