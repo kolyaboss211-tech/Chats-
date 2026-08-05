@@ -50,10 +50,33 @@ onChildAdded(ref(db, "m"), d => {
   const min = String(date.getMinutes()).padStart(2, "0");
 
   chat.innerHTML += `
-    <div style="margin:6px 0">
-      <b>${m.n}</b>
-      <span style="color:gray;font-size:12px">${h}:${min}</span><br>
-      ${m.t}
+    <div style="display:flex;margin:8px 0;">
+      <div style="
+        background:#2b5278;
+        color:white;
+        padding:10px 14px;
+        border-radius:18px;
+        max-width:75%;
+        word-break:break-word;
+        box-shadow:0 2px 5px rgba(0,0,0,.3);
+      ">
+        <div style="font-weight:bold;color:#8fd3ff">
+          ${m.n}
+        </div>
+
+        <div style="margin-top:4px">
+          ${m.t}
+        </div>
+
+        <div style="
+          text-align:right;
+          font-size:11px;
+          color:#cfcfcf;
+          margin-top:6px;
+        ">
+          ${h}:${min}
+        </div>
+      </div>
     </div>
   `;
 
