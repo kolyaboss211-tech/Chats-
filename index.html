@@ -116,13 +116,17 @@ onChildAdded(ref(db, "m"), d => {
       </div>
 
       <div style="
-        text-align:right;
-        font-size:11px;
-        color:#dddddd;
-        margin-top:6px;
-      ">
-        ${h}:${min}
-      </div>
+display:flex;
+justify-content:flex-end;
+align-items:center;
+gap:4px;
+font-size:11px;
+color:#dfefff;
+margin-top:6px;
+">
+<span>${h}:${min}</span>
+<span>${my ? "✔✔" : ""}</span>
+</div>
 
     </div>
 
