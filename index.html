@@ -3,10 +3,39 @@
 <body style="background:#0f172a;color:white;font-family:sans-serif">
 
 <div id="chat"
-style="height:80vh;overflow:auto"></div>
+style="
+height:85vh;
+overflow:auto;
+padding:10px;
+background:#17212b;">
+</div>
 
-<input id="msg" placeholder="Сообщение">
-<button onclick="s()">➤</button>
+<div style="
+display:flex;
+padding:10px;
+background:#202b36;">
+  <input id="msg"
+  placeholder="Напишите сообщение..."
+  style="
+  flex:1;
+  padding:12px;
+  border:none;
+  border-radius:20px;
+  outline:none;
+  font-size:16px;">
+
+  <button onclick="s()"
+  style="
+  margin-left:8px;
+  width:48px;
+  border:none;
+  border-radius:50%;
+  background:#2ea6ff;
+  color:white;
+  font-size:20px;">
+  ➤
+  </button>
+</div>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
