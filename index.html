@@ -85,18 +85,7 @@ window.s = function () {
 
   msg.value = "";
 }
-update(ref(db,"m/"+id),{
-  read:true
-});
-  push(ref(db, "m"), {
-    n: n,
-    t: msg.value,
-    time: Date.now()
-  });
-set(ref(db,"online/"+n),true);
-  msg.value = "";
-}
-${m.read ? "✔✔" : "✔"}
+
 onChildAdded(ref(db, "m"), d => {
   const m = d.val();
 
