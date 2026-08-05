@@ -64,16 +64,15 @@ const app = initializeApp({
   appId: "1:888879915328:web:ece055c1794243915c9aa5",
   databaseURL: "https://chats-2e309-default-rtdb.firebaseio.com"
 });
-
-const db=getDatabase(app);
-import { set, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-set(ref(db, "online/" + n), true);
-
-window.addEventListener("beforeunload", () => {
-  remove(ref(db, "online/" + n));
-});
-let n=localStorage.getItem("n");
+import { initializeApp } from "...";
+import {
+  getDatabase,
+  ref,
+  push,
+  onChildAdded,
+  set,
+  remove
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 if(!n){
   n=prompt("Твой ник:");
   localStorage.setItem("n",n);
