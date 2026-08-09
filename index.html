@@ -20,7 +20,8 @@ html,body{
 
 .app{
  width:100%;
- height:100vh;
+ height:100dvh;
+ min-height:0;
  display:flex;
  flex-direction:column
 }
@@ -32,7 +33,8 @@ html,body{
  display:flex;
  align-items:center;
  padding:0 10px;
- gap:10px
+ gap:10px;
+ flex-shrink:0
 }
 
 .header button{
@@ -41,7 +43,8 @@ html,body{
  border:0;
  background:none;
  color:white;
- font-size:29px
+ font-size:29px;
+ cursor:pointer
 }
 
 .header-title{
@@ -55,9 +58,17 @@ html,body{
  color:#8b9ba5
 }
 
+#contactsScreen{
+ height:100%;
+ min-height:0;
+ display:flex;
+ flex-direction:column
+}
+
 .search{
  padding:10px;
- background:#17212b
+ background:#17212b;
+ flex-shrink:0
 }
 
 .search input{
@@ -76,14 +87,9 @@ html,body{
  color:#9aa9b3
 }
 
-#contactsScreen{
- height:100%;
- display:flex;
- flex-direction:column
-}
-
 #contacts{
- flex:1;
+ flex:1 1 auto;
+ min-height:0;
  overflow-y:auto
 }
 
@@ -149,17 +155,24 @@ html,body{
  color:#fff;
  font-size:14px;
  line-height:1.4;
- word-break:break-word
+ word-break:break-word;
+ flex-shrink:0
 }
+
+
+/* ================= CHAT ================= */
 
 #chatScreen{
  height:100%;
+ min-height:0;
  display:none;
- flex-direction:column
+ flex-direction:column;
+ overflow:hidden
 }
 
 #chat{
- flex:1;
+ flex:1 1 auto;
+ min-height:0;
  overflow-y:auto;
  padding:10px 8px
 }
@@ -216,16 +229,21 @@ html,body{
  color:rgba(255,255,255,.75)
 }
 
+
+/* ================= INPUT ================= */
+
 .input-area{
  display:flex;
  align-items:center;
  gap:8px;
  padding:8px;
- background:#202b36
+ background:#202b36;
+ flex-shrink:0;
+ min-height:64px
 }
 
 #msg{
- flex:1;
+ flex:1 1 auto;
  min-width:0;
  height:48px;
  border:0;
@@ -249,15 +267,19 @@ html,body{
  border-radius:50%;
  background:#2ea6ff;
  color:white;
- font-size:22px
+ font-size:22px;
+ cursor:pointer
 }
+
+
+/* ================= MENU ================= */
 
 #sideMenu{
  position:fixed;
  top:0;
  left:0;
  width:290px;
- height:100vh;
+ height:100dvh;
  background:#202b36;
  z-index:1000;
  transform:translateX(-100%);
@@ -322,28 +344,67 @@ html,body{
 .menuItem:active{
  background:#263544
 }
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:500px){
+
+ .header{
+  height:60px;
+  min-height:60px
+ }
+
+ .header-title{
+  font-size:20px
+ }
+
+ .message{
+  max-width:82%
+ }
+
+ .message-text{
+  font-size:17px
+ }
+
+}
 </style>
 </head>
 
 <body>
+
+<!-- ================= MENU ================= -->
 
 <div id="menuOverlay" onclick="closeMenu()"></div>
 
 <div id="sideMenu">
 
  <div class="menuProfile">
-  <div class="menuAvatar" id="menuAvatar">?</div>
-  <div>
-   <div class="menuName" id="menuName">Пользователь</div>
-   <div class="menuOnline">🟢 онлайн</div>
+
+  <div class="menuAvatar" id="menuAvatar">
+   ?
   </div>
+
+  <div>
+
+   <div class="menuName" id="menuName">
+    Пользователь
+   </div>
+
+   <div class="menuOnline">
+    🟢 онлайн
+   </div>
+
+  </div>
+
  </div>
 
  <div class="menuItem" onclick="closeMenu()">
   👤 &nbsp; Мой профиль
  </div>
 
- <div class="menuItem" onclick="openContacts();closeMenu()">
+ <div class="menuItem"
+      onclick="openContacts();closeMenu()">
   💬 &nbsp; Контакты
  </div>
 
@@ -354,26 +415,45 @@ html,body{
 </div>
 
 
+<!-- ================= APP ================= -->
+
 <div class="app">
+
+ <!-- ================= CONTACTS ================= -->
 
  <div id="contactsScreen">
 
   <div class="header">
 
-   <button onclick="openMenu()">☰</button>
+   <button onclick="openMenu()">
+    ☰
+   </button>
 
    <div>
-    <div class="header-title">NicChat</div>
+
+    <div class="header-title">
+     NicChat
+    </div>
+
     <div class="header-status" id="usersCount">
      Подключение...
     </div>
+
    </div>
 
   </div>
 
+
   <div class="search">
-   <input id="search" placeholder="🔎 Поиск" autocomplete="off">
+
+   <input
+    id="search"
+    placeholder="🔎 Поиск"
+    autocomplete="off"
+   >
+
   </div>
+
 
   <div id="errorBox"></div>
 
@@ -382,34 +462,71 @@ html,body{
  </div>
 
 
+ <!-- ================= CHAT ================= -->
+
  <div id="chatScreen">
 
   <div class="header">
 
-   <button onclick="openContacts()">←</button>
+   <button onclick="openContacts()">
+    ←
+   </button>
 
-   <div class="avatar"
-        id="chatAvatar"
-        style="width:42px;height:42px;margin:0;font-size:18px">
+
+   <div
+    class="avatar"
+    id="chatAvatar"
+    style="
+     width:42px;
+     height:42px;
+     margin:0;
+     font-size:18px;
+    "
+   >
     ?
    </div>
 
+
    <div>
-    <div class="header-title" id="chatName">Чат</div>
-    <div class="header-status" id="chatStatus">...</div>
+
+    <div
+     class="header-title"
+     id="chatName"
+    >
+     Чат
+    </div>
+
+    <div
+     class="header-status"
+     id="chatStatus"
+    >
+     ...
+    </div>
+
    </div>
 
   </div>
 
+
   <div id="chat"></div>
+
+
+  <!-- INPUT -->
 
   <div class="input-area">
 
-   <input id="msg"
-          placeholder="Написать сообщение..."
-          autocomplete="off">
+   <input
+    id="msg"
+    placeholder="Написать сообщение..."
+    autocomplete="off"
+   >
 
-   <button class="send" onclick="sendMessage()">➤</button>
+   <button
+    class="send"
+    onclick="sendMessage()"
+   >
+    ➤
+   </button>
 
   </div>
 
@@ -422,7 +539,8 @@ html,body{
 
 import {
  initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+} from
+"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
 import {
  getDatabase,
@@ -434,56 +552,71 @@ import {
  onDisconnect,
  off,
  remove
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+} from
+"https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 
-/* ================= ОШИБКИ ================= */
+/* ================= ERROR ================= */
 
 function showError(error){
 
- const box=document.getElementById("errorBox");
+ const box=
+ document.getElementById("errorBox");
 
  box.style.display="block";
 
  let text="Ошибка Firebase: ";
 
- if(error?.code){
+ if(error && error.code){
+
   text+=error.code;
+
  }else{
-  text+=error?.message || String(error);
+
+  text+=
+   error?.message ||
+   String(error);
+
  }
 
  box.textContent=text;
 
- document.getElementById("usersCount").textContent=
-   "Ошибка подключения";
+ document.getElementById("usersCount")
+ .textContent="Ошибка подключения";
 
  console.error(error);
+
 }
 
 
 /* ================= FIREBASE ================= */
 
-let db;
+let db=null;
 
 try{
 
  const app=initializeApp({
 
-  apiKey:"AIzaSyAVsq99vOv_H3QxukyZBFEzb4zR1J5ha68",
+  apiKey:
+   "AIzaSyAVsq99vOv_H3QxukyZBFEzb4zR1J5ha68",
 
-  authDomain:"chats-2e309.firebaseapp.com",
+  authDomain:
+   "chats-2e309.firebaseapp.com",
 
-  projectId:"chats-2e309",
+  projectId:
+   "chats-2e309",
 
-  storageBucket:"chats-2e309.firebasestorage.app",
+  storageBucket:
+   "chats-2e309.firebasestorage.app",
 
-  messagingSenderId:"888879915328",
+  messagingSenderId:
+   "888879915328",
 
-  appId:"1:888879915328:web:ece055c1794243915c9aa5",
+  appId:
+   "1:888879915328:web:ece055c1794243915c9aa5",
 
   databaseURL:
-  "https://chats-2e309-default-rtdb.firebaseio.com"
+   "https://chats-2e309-default-rtdb.firebaseio.com"
 
  });
 
@@ -498,19 +631,25 @@ try{
 
 /* ================= NICK ================= */
 
-let n=localStorage.getItem("n");
+let n=
+localStorage.getItem("n");
 
 if(!n){
 
  n=prompt("Твой ник:");
 
  if(!n || !n.trim()){
-  n="User"+Math.floor(Math.random()*99999);
+
+  n=
+   "User"+
+   Math.floor(Math.random()*99999);
+
  }
 
  n=n.trim();
 
  localStorage.setItem("n",n);
+
 }
 
 
@@ -518,27 +657,34 @@ if(!n){
 
 window.openMenu=function(){
 
- document.getElementById("sideMenu")
+ document
+ .getElementById("sideMenu")
  .classList.add("open");
 
- document.getElementById("menuOverlay")
+ document
+ .getElementById("menuOverlay")
  .classList.add("open");
 
- document.getElementById("menuName")
+ document
+ .getElementById("menuName")
  .textContent=n;
 
- document.getElementById("menuAvatar")
- .textContent=n.charAt(0).toUpperCase();
+ document
+ .getElementById("menuAvatar")
+ .textContent=
+  n.charAt(0).toUpperCase();
 
 };
 
 
 window.closeMenu=function(){
 
- document.getElementById("sideMenu")
+ document
+ .getElementById("sideMenu")
  .classList.remove("open");
 
- document.getElementById("menuOverlay")
+ document
+ .getElementById("menuOverlay")
  .classList.remove("open");
 
 };
@@ -552,10 +698,11 @@ function userKey(name){
 
 }
 
+
 const myKey=userKey(n);
 
 
-/* ================= FIREBASE USER ================= */
+/* ================= USER ================= */
 
 if(db){
 
@@ -569,11 +716,21 @@ if(db){
    }
   );
 
-  const onlineRef=ref(db,"online/"+myKey);
 
-  set(onlineRef,true);
+  const onlineRef=
+   ref(db,"online/"+myKey);
 
-  onDisconnect(onlineRef).remove();
+
+  set(
+   onlineRef,
+   true
+  );
+
+
+  onDisconnect(
+   onlineRef
+  ).remove();
+
 
  }catch(error){
 
@@ -588,17 +745,21 @@ if(db){
 
 let contactsData={};
 
+
 if(db){
 
  onValue(
+
   ref(db,"users"),
 
   snapshot=>{
 
-   document.getElementById("errorBox")
-   .style.display="none";
+   document
+    .getElementById("errorBox")
+    .style.display="none";
 
-   contactsData=snapshot.val() || {};
+   contactsData=
+    snapshot.val() || {};
 
    renderContacts();
 
@@ -609,6 +770,7 @@ if(db){
    showError(error);
 
   }
+
  );
 
 }
@@ -619,41 +781,54 @@ if(db){
 function renderContacts(){
 
  const container=
- document.getElementById("contacts");
+  document.getElementById("contacts");
+
 
  const search=
- document.getElementById("search")
- .value.toLowerCase().trim();
+  document
+   .getElementById("search")
+   .value
+   .toLowerCase()
+   .trim();
+
 
  container.innerHTML="";
 
+
  const users=
- Object.values(contactsData)
- .filter(user=>{
+  Object.values(contactsData)
+  .filter(user=>{
 
-  if(!user || !user.name)return false;
+   if(!user || !user.name)
+    return false;
 
-  if(user.name===n)return false;
+   if(user.name===n)
+    return false;
 
-  return user.name
-   .toLowerCase()
-   .includes(search);
+   return user.name
+    .toLowerCase()
+    .includes(search);
 
- });
+  });
 
 
- document.getElementById("usersCount")
- .textContent=
- users.length+
- (users.length===1
-  ?" пользователь"
-  :" пользователей");
+ document
+  .getElementById("usersCount")
+  .textContent=
+   users.length+
+   (
+    users.length===1
+     ?" пользователь"
+     :" пользователей"
+   );
 
 
  if(!users.length){
 
   container.innerHTML=
-  `<div class="empty">Нет контактов</div>`;
+   `<div class="empty">
+     Нет контактов
+    </div>`;
 
   return;
 
@@ -662,16 +837,25 @@ function renderContacts(){
 
  users.forEach(user=>{
 
-  const key=userKey(user.name);
+  const key=
+   userKey(user.name);
 
-  const div=document.createElement("div");
+
+  const div=
+   document.createElement("div");
+
 
   div.className="contact";
+
 
   div.innerHTML=`
 
    <div class="avatar">
-    ${escapeHTML(user.name.charAt(0).toUpperCase())}
+    ${escapeHTML(
+     user.name
+      .charAt(0)
+      .toUpperCase()
+    )}
    </div>
 
    <div class="contact-info">
@@ -687,9 +871,14 @@ function renderContacts(){
     </div>
 
    </div>
+
   `;
 
-  div.onclick=()=>openChat(user.name);
+
+  div.onclick=()=>{
+   openChat(user.name);
+  };
+
 
   container.appendChild(div);
 
@@ -697,26 +886,40 @@ function renderContacts(){
   if(db){
 
    onValue(
+
     ref(db,"online/"+key),
 
     snapshot=>{
 
      const status=
-     document.getElementById("status-"+key);
+      document.getElementById(
+       "status-"+key
+      );
 
-     if(!status)return;
 
-     if(snapshot.val()===true){
+     if(!status)
+      return;
 
-      status.textContent="🟢 в сети";
 
-      status.classList.add("online");
+     if(
+      snapshot.val()===true
+     ){
+
+      status.textContent=
+       "🟢 в сети";
+
+      status.classList.add(
+       "online"
+      );
 
      }else{
 
-      status.textContent="был(а) недавно";
+      status.textContent=
+       "был(а) недавно";
 
-      status.classList.remove("online");
+      status.classList.remove(
+       "online"
+      );
 
      }
 
@@ -727,6 +930,7 @@ function renderContacts(){
      console.error(error);
 
     }
+
    );
 
   }
@@ -738,8 +942,12 @@ function renderContacts(){
 
 /* ================= SEARCH ================= */
 
-document.getElementById("search")
-.addEventListener("input",renderContacts);
+document
+ .getElementById("search")
+ .addEventListener(
+  "input",
+  renderContacts
+ );
 
 
 /* ================= ESCAPE ================= */
@@ -747,55 +955,109 @@ document.getElementById("search")
 function escapeHTML(text){
 
  return String(text)
- .replaceAll("&","&amp;")
- .replaceAll("<","&lt;")
- .replaceAll(">","&gt;")
- .replaceAll('"',"&quot;")
- .replaceAll("'","&#039;");
+
+  .replaceAll(
+   "&",
+   "&amp;"
+  )
+
+  .replaceAll(
+   "<",
+   "&lt;"
+  )
+
+  .replaceAll(
+   ">",
+   "&gt;"
+  )
+
+  .replaceAll(
+   '"',
+   "&quot;"
+  )
+
+  .replaceAll(
+   "'",
+   "&#039;"
+  );
 
 }
 
 
 /* ================= CHAT ID ================= */
 
-function chatId(user1,user2){
+function chatId(
+ user1,
+ user2
+){
 
  const users=[
   userKey(user1),
   userKey(user2)
  ].sort();
 
+
  return users[0]+"_"+users[1];
 
 }
 
 
-/* ================= CHAT ================= */
+/* ================= OPEN CHAT ================= */
 
 let selectedUser=null;
+
 let selectedChat=null;
+
 let messageRef=null;
+
 
 window.openChat=function(username){
 
- selectedUser=username;
+ selectedUser=
+  username;
 
- selectedChat=chatId(n,username);
 
- document.getElementById("contactsScreen")
- .style.display="none";
+ selectedChat=
+  chatId(
+   n,
+   username
+  );
 
- document.getElementById("chatScreen")
- .style.display="flex";
 
- document.getElementById("chatName")
- .textContent=username;
+ document
+  .getElementById(
+   "contactsScreen"
+  )
+  .style.display="none";
 
- document.getElementById("chatAvatar")
- .textContent=username.charAt(0).toUpperCase();
 
- document.getElementById("chat")
- .innerHTML="";
+ document
+  .getElementById(
+   "chatScreen"
+  )
+  .style.display="flex";
+
+
+ document
+  .getElementById(
+   "chatName"
+  )
+  .textContent=username;
+
+
+ document
+  .getElementById(
+   "chatAvatar"
+  )
+  .textContent=
+   username
+    .charAt(0)
+    .toUpperCase();
+
+
+ document
+  .getElementById("chat")
+  .innerHTML="";
 
 
  if(messageRef){
@@ -805,42 +1067,66 @@ window.openChat=function(username){
  }
 
 
- if(!db)return;
+ if(!db)
+  return;
 
 
- messageRef=ref(db,"chats/"+selectedChat);
+ messageRef=
+  ref(
+   db,
+   "chats/"+selectedChat
+  );
 
 
  onValue(
-  ref(db,"online/"+userKey(username)),
+
+  ref(
+   db,
+   "online/"+userKey(username)
+  ),
 
   snapshot=>{
 
    const status=
-   document.getElementById("chatStatus");
+    document.getElementById(
+     "chatStatus"
+    );
 
-   if(snapshot.val()===true){
 
-    status.textContent="🟢 в сети";
-    status.style.color="#35d07f";
+   if(
+    snapshot.val()===true
+   ){
+
+    status.textContent=
+     "🟢 в сети";
+
+    status.style.color=
+     "#35d07f";
 
    }else{
 
-    status.textContent="был(а) недавно";
-    status.style.color="#8495a0";
+    status.textContent=
+     "был(а) недавно";
+
+    status.style.color=
+     "#8495a0";
 
    }
 
   }
+
  );
 
 
  onChildAdded(
+
   messageRef,
 
   snapshot=>{
 
-   showMessage(snapshot.val());
+   showMessage(
+    snapshot.val()
+   );
 
   },
 
@@ -849,45 +1135,80 @@ window.openChat=function(username){
    showError(error);
 
   }
+
  );
 
 };
 
 
-/* ================= MESSAGE ================= */
+/* ================= SHOW MESSAGE ================= */
 
 function showMessage(m){
 
- if(!m)return;
+ if(!m)
+  return;
 
- const chat=document.getElementById("chat");
 
- const my=m.from===n;
+ const chat=
+  document.getElementById(
+   "chat"
+  );
 
- const row=document.createElement("div");
+
+ const my=
+  m.from===n;
+
+
+ const row=
+  document.createElement(
+   "div"
+  );
+
 
  row.className=
- "message-row "+(my?"my":"other");
+  "message-row "+
+  (my?"my":"other");
 
- const bubble=document.createElement("div");
+
+ const bubble=
+  document.createElement(
+   "div"
+  );
+
 
  bubble.className=
- "message "+(my?"my":"other");
+  "message "+
+  (my?"my":"other");
 
- const date=new Date(m.time||Date.now());
 
- const h=String(date.getHours()).padStart(2,"0");
+ const date=
+  new Date(
+   m.time || Date.now()
+  );
 
- const min=String(date.getMinutes()).padStart(2,"0");
+
+ const h=
+  String(
+   date.getHours()
+  ).padStart(2,"0");
+
+
+ const min=
+  String(
+   date.getMinutes()
+  ).padStart(2,"0");
+
 
  bubble.innerHTML=`
 
   ${
    !my
-   ?`<div class="message-name">
-      ${escapeHTML(m.from)}
-     </div>`
-   :""
+   ?
+   `<div class="message-name">
+     ${escapeHTML(m.from)}
+    </div>`
+   :
+   ""
   }
 
   <div class="message-text">
@@ -896,18 +1217,35 @@ function showMessage(m){
 
   <div class="message-bottom">
 
-   <span>${h}:${min}</span>
+   <span>
+    ${h}:${min}
+   </span>
 
-   ${my?"<span>✔✔</span>":""}
+   ${
+    my
+    ?
+    "<span>✔✔</span>"
+    :
+    ""
+   }
 
   </div>
+
  `;
 
- row.appendChild(bubble);
 
- chat.appendChild(row);
+ row.appendChild(
+  bubble
+ );
 
- chat.scrollTop=chat.scrollHeight;
+
+ chat.appendChild(
+  row
+ );
+
+
+ chat.scrollTop=
+  chat.scrollHeight;
 
 }
 
@@ -916,41 +1254,68 @@ function showMessage(m){
 
 window.sendMessage=function(){
 
- const input=document.getElementById("msg");
+ const input=
+  document.getElementById(
+   "msg"
+  );
 
- const text=input.value.trim();
 
- if(!text)return;
+ const text=
+  input.value.trim();
+
+
+ if(!text)
+  return;
+
 
  if(!selectedUser){
 
-  alert("Сначала выбери контакт");
+  alert(
+   "Сначала выбери контакт"
+  );
 
   return;
 
  }
+
 
  if(!db){
 
-  alert("Firebase не подключён");
+  alert(
+   "Firebase не подключён"
+  );
 
   return;
 
  }
 
+
  push(
-  ref(db,"chats/"+selectedChat),
+
+  ref(
+   db,
+   "chats/"+selectedChat
+  ),
+
   {
+
    from:n,
+
    to:selectedUser,
+
    text:text,
+
    time:Date.now(),
+
    read:false
+
   }
+
  )
  .then(()=>{
 
   input.value="";
+
   input.focus();
 
  })
@@ -965,55 +1330,86 @@ window.sendMessage=function(){
 
 /* ================= ENTER ================= */
 
-document.getElementById("msg")
-.addEventListener("keydown",event=>{
+document
+ .getElementById("msg")
+ .addEventListener(
+  "keydown",
+  event=>{
 
- if(event.key==="Enter"){
+   if(
+    event.key==="Enter"
+   ){
 
-  event.preventDefault();
+    event.preventDefault();
 
-  sendMessage();
+    sendMessage();
 
- }
+   }
 
-});
+  }
+ );
 
 
 /* ================= CONTACTS ================= */
 
 window.openContacts=function(){
 
- document.getElementById("chatScreen")
- .style.display="none";
+ document
+  .getElementById(
+   "chatScreen"
+  )
+  .style.display="none";
 
- document.getElementById("contactsScreen")
- .style.display="flex";
+
+ document
+  .getElementById(
+   "contactsScreen"
+  )
+  .style.display="flex";
+
 
  selectedUser=null;
 
  selectedChat=null;
 
- document.getElementById("chat")
- .innerHTML="";
+
+ if(messageRef){
+
+  off(messageRef);
+
+  messageRef=null;
+
+ }
+
+
+ document
+  .getElementById("chat")
+  .innerHTML="";
 
 };
 
 
 /* ================= OFFLINE ================= */
 
-window.addEventListener("beforeunload",()=>{
+window.addEventListener(
+ "beforeunload",
+ ()=>{
 
- if(db){
+  if(db){
 
-  remove(
-   ref(db,"online/"+myKey)
-  );
+   remove(
+    ref(
+     db,
+     "online/"+myKey
+    )
+   );
+
+  }
 
  }
-
-});
+);
 
 </script>
 
 </body>
-  </html>
+</html>
