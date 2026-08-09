@@ -1,167 +1,1042 @@
 <!DOCTYPE html>
-<html>
-<body style="
-margin:0;
-background:#17212b;
-font-family:Arial,sans-serif;
-color:white;
-">
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<div id="chat"
-style="
-height:85vh;
-overflow-y:auto;
-font-size:13px;
-font-weight:600;
-box-sizing:border-box;
-scroll-behavior:smooth;
-">
-</div>
-<input type="file" id="photo" accept="image/*">
-<div style="
-display:flex;
-font-size:28px;
-opacity:.7;
-background:#202b36;">
- <input
-id="msg"
-placeholder="Написать сообщение..."
-style="
-flex:1;
-font-size:16px;
-line-height:1.4;
-border:none;
-outline:none;
-border-radius:25px;
-font-size:16px;
-font-weight:600;
-background:#263544;
-color:white;
-">
-  <button onclick="s()"
-  style="
-  margin-left:8px;
-  width:48px;
-  border:none;
-  border-radius:50%;
-  background:#2ea6ff;
-  color:white;
-  font-size:20px;">
-  ➤
-  </button>
-</div>
+<title>Мой чат</title>
 
-<script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getDatabase,
-  ref,
-  push,
-  onChildAdded,
-  set,
-  remove
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-const app = initializeApp({
-  apiKey: "AIzaSyAVsq99vOv_H3QxukyZBFEzb4zR1J5ha68",
-  authDomain: "chats-2e309.firebaseapp.com",
-  projectId: "chats-2e309",
-  storageBucket: "chats-2e309.firebasestorage.app",
-  messagingSenderId: "888879915328",
-  appId: "1:888879915328:web:ece055c1794243915c9aa5",
-  databaseURL: "https://chats-2e309-default-rtdb.firebaseio.com"
-});
-const db = getDatabase(app);
-
-let n = localStorage.getItem("n");
-
-
-
-set(ref(db, "online/" + n), true);
-
-window.addEventListener("beforeunload", () => {
-  remove(ref(db, "online/" + n));
-});
-if(!n){
-  n=prompt("Твой ник:");
-  localStorage.setItem("n",n);
+<style>
+* {
+  box-sizing: border-box;
 }
 
-window.s = function () {
-  if (!msg.value.trim()) return;
-
-  push(ref(db, "m"), {
-    n: n,
-    t: msg.value,
-    time: Date.now(),
-    read: false
-  });
-
-  msg.value = "";
+body {
+  margin: 0;
+  background: #17212b;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
-onChildAdded(ref(db, "m"), d => {
-  const m = d.val();
+/* Весь чат */
+.app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-  const date = new Date(m.time || Date.now());
-  const h = String(date.getHours()).padStart(2, "0");
-  const min = String(date.getMinutes()).padStart(2, "0");
+/* ===== ШАПКА ===== */
 
-  const my = m.n === n;
+.header {
+  height: 60px;
+  background: #202b36;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 12px;
+  flex-shrink: 0;
+}
 
-  chat.innerHTML += `
-  <div style="
-    display:flex;
-    justify-content:${my ? "flex-end" : "flex-start"};
-    margin:8px;
-  ">
-  
-    <div style="
-      background:${my ? "#2ea6ff" : "#2b2b2b"};
-      color:white;
-      padding:10px 14px;
-      border-radius:18px;
-      max-width:75%;
-      word-break:break-word;
-      box-shadow:0 2px 6px rgba(0,0,0,.3);
-      font-size:30px;
-      line-height:1.4;
-">
+.header button {
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.header-title {
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.header-status {
+  font-size: 13px;
+  color: #8aa0ad;
+  margin-top: 2px;
+}
+
+/* ===== КОНТАКТЫ ===== */
+
+#contactsScreen {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.search {
+  padding: 10px;
+  background: #17212b;
+}
+
+.search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 22px;
+  padding: 12px 16px;
+  background: #263544;
+  color: white;
+  font-size: 16px;
+}
+
+.search input::placeholder {
+  color: #9aa9b3;
+}
+
+#contacts {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Контакт */
+
+.contact {
+  display: flex;
+  align-items: center;
+  padding: 11px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+
+.contact:hover {
+  background: #202b36;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #2ea6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin-right: 13px;
+  flex-shrink: 0;
+}
+
+.contact-info {
+  min-width: 0;
+}
+
+.contact-name {
+  font-size: 17px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contact-status {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #8495a0;
+}
+
+.online {
+  color: #35d07f;
+}
+
+/* ===== ЧАТ ===== */
+
+#chatScreen {
+  height: 100%;
+  display: none;
+  flex-direction: column;
+}
+
+#chat {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 8px;
+  scroll-behavior: smooth;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255,255,255,.015),
+      transparent 60%
+    );
+}
+
+/* Сообщение */
+
+.message-row {
+  display: flex;
+  margin: 6px 2px;
+}
+
+.message-row.my {
+  justify-content: flex-end;
+}
+
+.message-row.other {
+  justify-content: flex-start;
+}
+
+.message {
+  max-width: 78%;
+  padding: 8px 12px;
+  border-radius: 17px;
+  word-break: break-word;
+  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+}
+
+.message.my {
+  background: #2ea6ff;
+  border-bottom-right-radius: 5px;
+}
+
+.message.other {
+  background: #2b3945;
+  border-bottom-left-radius: 5px;
+}
+
+.message-name {
+  color: #7ed0ff;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.message-text {
+  font-size: 17px;
+  line-height: 1.35;
+}
+
+.message-bottom {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  font-size: 11px;
+  color: rgba(255,255,255,.75);
+}
+
+/* ===== ВВОД ===== */
+
+.input-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: #202b36;
+}
+
+#msg {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  border-radius: 25px;
+  padding: 12px 16px;
+  background: #263544;
+  color: white;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+#msg::placeholder {
+  color: #9aa9b3;
+}
+
+.send {
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: #2ea6ff;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.send:active {
+  transform: scale(.94);
+}
+
+/* Пустой список */
+
+.empty {
+  text-align: center;
+  color: #82909a;
+  padding: 30px;
+  font-size: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- ================= КОНТАКТЫ ================= -->
+
+  <div id="contactsScreen">
+
+    <div class="header">
+      <button onclick="openContacts()">☰</button>
+
+      <div>
+        <div class="header-title">Контакты</div>
+        <div class="header-status" id="usersCount">
+          Загрузка...
+        </div>
+      </div>
+    </div>
+
+    <div class="search">
+      <input
+        id="search"
+        placeholder="🔎 Поиск"
+        autocomplete="off"
+      >
+    </div>
+
+    <div id="contacts"></div>
+
+  </div>
+
+
+  <!-- ================= ЧАТ ================= -->
+
+  <div id="chatScreen">
+
+    <div class="header">
+
+      <button onclick="openContacts()">‹</button>
 
       <div style="
-        font-size:30px;
-        font-weight:700;
-        color:${my ? "#ffffff" : "#8fd3ff"};
-        margin-bottom:4px;
-">
-      
-        ${m.n}
+        width:42px;
+        height:42px;
+        border-radius:50%;
+        background:#2ea6ff;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-weight:bold;
+        font-size:18px;
+      " id="chatAvatar">
+        ?
       </div>
 
       <div>
-        ${m.t}
+        <div class="header-title" id="chatName">
+          Чат
+        </div>
+
+        <div class="header-status" id="chatStatus">
+          ...
+        </div>
       </div>
 
-      <div style="
-display:flex;
-justify-content:flex-end;
-align-items:center;
-gap:4px;
-font-size:11px;
-color:#dfefff;
-margin-top:6px;
-">
-<span>${h}:${min}</span>
-<span>${my ? "✔✔" : ""}</span>
-</div>
+    </div>
+
+
+    <div id="chat"></div>
+
+
+    <div class="input-area">
+
+      <input
+        id="msg"
+        placeholder="Написать сообщение..."
+        autocomplete="off"
+      >
+
+      <button class="send" onclick="sendMessage()">
+        ➤
+      </button>
 
     </div>
 
   </div>
+
+</div>
+
+
+<script type="module">
+
+/* =====================================================
+   FIREBASE
+===================================================== */
+
+import {
+  initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  push,
+  set,
+  onValue,
+  onChildAdded,
+  onDisconnect,
+  off,
+  remove
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+
+const app = initializeApp({
+
+  apiKey: "AIzaSyAVsq99vOv_H3QxukyZBFEzb4zR1J5ha68",
+
+  authDomain:
+    "chats-2e309.firebaseapp.com",
+
+  projectId:
+    "chats-2e309",
+
+  storageBucket:
+    "chats-2e309.firebasestorage.app",
+
+  messagingSenderId:
+    "888879915328",
+
+  appId:
+    "1:888879915328:web:ece055c1794243915c9aa5",
+
+  databaseURL:
+    "https://chats-2e309-default-rtdb.firebaseio.com"
+
+});
+
+
+const db = getDatabase(app);
+
+
+/* =====================================================
+   ПЕРЕМЕННЫЕ
+===================================================== */
+
+let n = localStorage.getItem("n");
+
+let selectedUser = null;
+
+let selectedChat = null;
+
+let messageListener = null;
+
+let contactsData = {};
+
+
+/* =====================================================
+   НИК ПОЛЬЗОВАТЕЛЯ
+===================================================== */
+
+if (!n) {
+
+  n = prompt("Твой ник:");
+
+  if (!n || !n.trim()) {
+
+    n = "User" + Math.floor(Math.random() * 99999);
+
+  }
+
+  n = n.trim();
+
+  localStorage.setItem("n", n);
+
+}
+
+
+/* =====================================================
+   БЕЗОПАСНЫЙ HTML
+===================================================== */
+
+function escapeHTML(text) {
+
+  return String(text)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* =====================================================
+   КЛЮЧ ДЛЯ FIREBASE
+===================================================== */
+
+function userKey(name) {
+
+  return encodeURIComponent(name)
+    .replace(/\./g, "%2E");
+
+}
+
+
+/* =====================================================
+   СОЗДАЁМ СЕБЯ В СПИСКЕ ПОЛЬЗОВАТЕЛЕЙ
+===================================================== */
+
+const myKey = userKey(n);
+
+set(
+  ref(db, "users/" + myKey),
+  {
+    name: n,
+    created: Date.now()
+  }
+);
+
+
+/* =====================================================
+   ONLINE
+===================================================== */
+
+const onlineRef =
+  ref(db, "online/" + myKey);
+
+set(onlineRef, true);
+
+onDisconnect(onlineRef).remove();
+
+
+/* =====================================================
+   ПОЛУЧАЕМ СПИСОК ПОЛЬЗОВАТЕЛЕЙ
+===================================================== */
+
+onValue(
+  ref(db, "users"),
+  snapshot => {
+
+    contactsData = snapshot.val() || {};
+
+    renderContacts();
+
+  }
+);
+
+
+/* =====================================================
+   ПОКАЗ КОНТАКТОВ
+===================================================== */
+
+function renderContacts() {
+
+  const container =
+    document.getElementById("contacts");
+
+  const search =
+    document
+      .getElementById("search")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  container.innerHTML = "";
+
+
+  const users =
+    Object.values(contactsData)
+      .filter(user => {
+
+        if (!user || !user.name) {
+          return false;
+        }
+
+        if (user.name === n) {
+          return false;
+        }
+
+        return user.name
+          .toLowerCase()
+          .includes(search);
+
+      })
+      .sort((a,b) =>
+        a.name.localeCompare(b.name)
+      );
+
+
+  document.getElementById("usersCount").textContent =
+    users.length +
+    (users.length === 1 ? " пользователь" : " пользователей");
+
+
+  if (users.length === 0) {
+
+    container.innerHTML = `
+      <div class="empty">
+        Нет контактов
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  users.forEach(user => {
+
+    const key = userKey(user.name);
+
+    const div =
+      document.createElement("div");
+
+    div.className = "contact";
+
+    const firstLetter =
+      user.name
+        .charAt(0)
+        .toUpperCase();
+
+
+    div.innerHTML = `
+
+      <div class="avatar">
+        ${escapeHTML(firstLetter)}
+      </div>
+
+      <div class="contact-info">
+
+        <div class="contact-name">
+          ${escapeHTML(user.name)}
+        </div>
+
+        <div
+          class="contact-status"
+          id="status-${key}"
+        >
+          проверка...
+        </div>
+
+      </div>
+
+    `;
+
+
+    div.onclick = () => {
+
+      openChat(user.name);
+
+    };
+
+
+    container.appendChild(div);
+
+
+    /* Проверяем online */
+
+    onValue(
+      ref(db, "online/" + key),
+      snapshot => {
+
+        const status =
+          document.getElementById(
+            "status-" + key
+          );
+
+        if (!status) return;
+
+
+        if (snapshot.val() === true) {
+
+          status.textContent = "🟢 в сети";
+
+          status.classList.add("online");
+
+        } else {
+
+          status.textContent = "был(а) недавно";
+
+          status.classList.remove("online");
+
+        }
+
+      }
+    );
+
+  });
+
+}
+
+
+/* =====================================================
+   ПОИСК
+===================================================== */
+
+document
+  .getElementById("search")
+  .addEventListener(
+    "input",
+    renderContacts
+  );
+
+
+/* =====================================================
+   ID ЛИЧНОГО ЧАТА
+===================================================== */
+
+function chatId(user1, user2) {
+
+  const users = [
+    userKey(user1),
+    userKey(user2)
+  ].sort();
+
+  return users[0] + "_" + users[1];
+
+}
+
+
+/* =====================================================
+   ОТКРЫТЬ ЧАТ
+===================================================== */
+
+window.openChat = function(username) {
+
+  selectedUser = username;
+
+  selectedChat =
+    chatId(n, username);
+
+
+  document
+    .getElementById("contactsScreen")
+    .style.display = "none";
+
+
+  document
+    .getElementById("chatScreen")
+    .style.display = "flex";
+
+
+  document
+    .getElementById("chatName")
+    .textContent = username;
+
+
+  document
+    .getElementById("chatAvatar")
+    .textContent =
+      username.charAt(0).toUpperCase();
+
+
+  /* статус */
+
+  checkChatStatus(username);
+
+
+  /* очищаем старый чат */
+
+  document
+    .getElementById("chat")
+    .innerHTML = "";
+
+
+  /* отключаем старый listener */
+
+  if (messageListener) {
+
+    off(
+      ref(
+        db,
+        "chats/" + messageListener
+      )
+    );
+
+  }
+
+
+  messageListener = selectedChat;
+
+
+  const messagesRef =
+    ref(
+      db,
+      "chats/" + selectedChat
+    );
+
+
+  onChildAdded(
+    messagesRef,
+    snapshot => {
+
+      const message =
+        snapshot.val();
+
+      showMessage(message);
+
+    }
+  );
+
+};
+
+
+/* =====================================================
+   СТАТУС ПОЛЬЗОВАТЕЛЯ
+===================================================== */
+
+function checkChatStatus(username) {
+
+  const key =
+    userKey(username);
+
+
+  onValue(
+    ref(db, "online/" + key),
+    snapshot => {
+
+      const status =
+        document.getElementById(
+          "chatStatus"
+        );
+
+      if (!status) return;
+
+
+      if (snapshot.val() === true) {
+
+        status.textContent = "🟢 в сети";
+
+        status.style.color = "#35d07f";
+
+      } else {
+
+        status.textContent =
+          "был(а) недавно";
+
+        status.style.color = "#8495a0";
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   ПОКАЗ СООБЩЕНИЯ
+===================================================== */
+
+function showMessage(m) {
+
+  if (!m) return;
+
+
+  const chat =
+    document.getElementById("chat");
+
+
+  const my =
+    m.from === n;
+
+
+  const row =
+    document.createElement("div");
+
+
+  row.className =
+    "message-row " +
+    (my ? "my" : "other");
+
+
+  const bubble =
+    document.createElement("div");
+
+
+  bubble.className =
+    "message " +
+    (my ? "my" : "other");
+
+
+  const date =
+    new Date(
+      m.time || Date.now()
+    );
+
+
+  const h =
+    String(
+      date.getHours()
+    ).padStart(2, "0");
+
+
+  const min =
+    String(
+      date.getMinutes()
+    ).padStart(2, "0");
+
+
+  bubble.innerHTML = `
+
+    ${
+      !my
+      ?
+      `
+      <div class="message-name">
+        ${escapeHTML(m.from)}
+      </div>
+      `
+      :
+      ""
+    }
+
+    <div class="message-text">
+      ${escapeHTML(m.text)}
+    </div>
+
+    <div class="message-bottom">
+
+      <span>
+        ${h}:${min}
+      </span>
+
+      ${
+        my
+        ?
+        `<span>✔✔</span>`
+        :
+        ""
+      }
+
+    </div>
+
   `;
 
-  chat.scrollTop = chat.scrollHeight;
-});
+
+  row.appendChild(bubble);
+
+  chat.appendChild(row);
+
+
+  chat.scrollTop =
+    chat.scrollHeight;
+
+}
+
+
+/* =====================================================
+   ОТПРАВИТЬ СООБЩЕНИЕ
+===================================================== */
+
+window.sendMessage = function() {
+
+  const input =
+    document.getElementById("msg");
+
+
+  const text =
+    input.value.trim();
+
+
+  if (!text) return;
+
+
+  if (!selectedUser) return;
+
+
+  push(
+    ref(
+      db,
+      "chats/" + selectedChat
+    ),
+    {
+
+      from: n,
+
+      to: selectedUser,
+
+      text: text,
+
+      time: Date.now(),
+
+      read: false
+
+    }
+  );
+
+
+  input.value = "";
+
+  input.focus();
+
+};
+
+
+/* =====================================================
+   ENTER = ОТПРАВИТЬ
+===================================================== */
+
+document
+  .getElementById("msg")
+  .addEventListener(
+    "keydown",
+    event => {
+
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+
+        event.preventDefault();
+
+        sendMessage();
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   НАЗАД К КОНТАКТАМ
+===================================================== */
+
+window.openContacts = function() {
+
+  document
+    .getElementById("chatScreen")
+    .style.display = "none";
+
+
+  document
+    .getElementById("contactsScreen")
+    .style.display = "flex";
+
+
+  selectedUser = null;
+
+  selectedChat = null;
+
+
+  document
+    .getElementById("chat")
+    .innerHTML = "";
+
+};
+
+
+/* =====================================================
+   ОБНОВЛЕНИЕ СТАТУСА ПРИ ЗАКРЫТИИ
+===================================================== */
+
+window.addEventListener(
+  "beforeunload",
+  () => {
+
+    remove(
+      ref(
+        db,
+        "online/" + myKey
+      )
+    );
+
+  }
+);
+
 </script>
 
 </body>
