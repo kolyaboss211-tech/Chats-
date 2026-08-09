@@ -2,89 +2,70 @@
 <html lang="ru">
 <head>
 
-<meta name="google-site-verification"
-content="6aurhX9vInCZ4yKrT6Z5YNQnNAgeRvNkLsejYXR90K4">
+<meta name="google-site-verification" content="6aurhX9vInCZ4yKrT6Z5YNQnNAgeRvNkLsejYXR90K4" />
 
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      content="width=device-width, initial-scale=1.0">
 
 <title>NicChat — онлайн-чат</title>
 
 <meta name="description"
-content="NicChat — бесплатный онлайн-чат для общения с друзьями и контактами.">
+      content="NicChat — бесплатный онлайн-чат для общения с друзьями и контактами.">
+
+<meta name="robots"
+      content="index, follow">
 
 <style>
 
 * {
   box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
 }
 
-html,
 body {
-  width: 100%;
-  height: 100%;
   margin: 0;
-  padding: 0;
-}
-
-body {
   background: #17212b;
   color: white;
   font-family: Arial, sans-serif;
   overflow: hidden;
 }
 
-button,
-input {
-  font-family: Arial, sans-serif;
-}
-
 .app {
-  width: 100%;
-  height: 100dvh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 /* ================= HEADER ================= */
 
 .header {
-  height: 54px;
-  min-height: 54px;
+  height: 60px;
   background: #202b36;
   display: flex;
   align-items: center;
-  padding: 0 8px;
-  gap: 8px;
+  padding: 0 12px;
+  gap: 12px;
   flex-shrink: 0;
 }
 
 .header button {
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   border: none;
   background: transparent;
   color: white;
-  font-size: 24px;
+  font-size: 28px;
   cursor: pointer;
-  border-radius: 50%;
-}
-
-.header button:active {
-  background: rgba(255,255,255,.08);
 }
 
 .header-title {
-  font-size: 17px;
+  font-size: 20px;
   font-weight: bold;
 }
 
 .header-status {
-  font-size: 11px;
+  font-size: 13px;
   color: #8b9ba5;
   margin-top: 2px;
 }
@@ -92,29 +73,25 @@ input {
 /* ================= CONTACTS ================= */
 
 #contactsScreen {
-  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .search {
-  padding: 7px;
+  padding: 10px;
   background: #17212b;
-  flex-shrink: 0;
 }
 
 .search input {
   width: 100%;
-  height: 38px;
   border: none;
   outline: none;
-  border-radius: 20px;
-  padding: 0 13px;
+  border-radius: 22px;
+  padding: 12px 16px;
   background: #263544;
   color: white;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .search input::placeholder {
@@ -123,34 +100,32 @@ input {
 
 #contacts {
   flex: 1;
-  min-height: 0;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .contact {
   display: flex;
   align-items: center;
-  padding: 8px 11px;
+  padding: 11px 14px;
   cursor: pointer;
   border-bottom: 1px solid rgba(255,255,255,.04);
 }
 
-.contact:active {
-  background: #263544;
+.contact:hover {
+  background: #202b36;
 }
 
 .avatar {
-  width: 42px;
-  height: 42px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background: #2ea6ff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
-  margin-right: 10px;
+  margin-right: 13px;
   flex-shrink: 0;
 }
 
@@ -159,16 +134,13 @@ input {
 }
 
 .contact-name {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .contact-status {
-  margin-top: 2px;
-  font-size: 11px;
+  margin-top: 4px;
+  font-size: 13px;
   color: #8495a0;
 }
 
@@ -179,40 +151,26 @@ input {
 .empty {
   text-align: center;
   color: #82909a;
-  padding: 30px 15px;
-  font-size: 14px;
+  padding: 30px;
 }
 
 /* ================= CHAT ================= */
 
 #chatScreen {
-  width: 100%;
   height: 100%;
   display: none;
   flex-direction: column;
-  overflow: hidden;
 }
-
-.chat-header-avatar {
-  width: 34px !important;
-  height: 34px !important;
-  margin: 0 !important;
-  font-size: 16px !important;
-}
-
-/* ================= MESSAGES ================= */
 
 #chat {
   flex: 1;
-  min-height: 0;
   overflow-y: auto;
-  padding: 7px 6px 8px;
-  -webkit-overflow-scrolling: touch;
+  padding: 10px 8px;
 }
 
 .message-row {
   display: flex;
-  margin: 4px 2px;
+  margin: 6px 2px;
 }
 
 .message-row.my {
@@ -224,132 +182,125 @@ input {
 }
 
 .message {
-  max-width: 80%;
-  padding: 6px 9px;
-  border-radius: 14px;
+  max-width: 78%;
+  padding: 8px 12px;
+  border-radius: 17px;
   word-break: break-word;
-  box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  box-shadow: 0 2px 5px rgba(0,0,0,.25);
 }
 
 .message.my {
   background: #2ea6ff;
-  border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 5px;
 }
 
 .message.other {
   background: #2b3945;
-  border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 5px;
 }
 
 .message-name {
   color: #7ed0ff;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 
 .message-text {
-  font-size: 15px;
-  line-height: 1.3;
-  white-space: pre-wrap;
+  font-size: 17px;
+  line-height: 1.35;
 }
 
 .message-bottom {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
-  gap: 3px;
-  margin-top: 2px;
-  font-size: 9px;
-  color: rgba(255,255,255,.72);
-}
-
-/* ================= IMAGE ================= */
-
-.chat-image {
-  display: block;
-  max-width: min(220px, 70vw);
-  max-height: 280px;
-  border-radius: 9px;
-  margin-top: 1px;
-  cursor: pointer;
+  gap: 4px;
+  margin-top: 5px;
+  font-size: 11px;
+  color: rgba(255,255,255,.75);
 }
 
 /* ================= FILE ================= */
 
-.file-message {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 0;
-  text-decoration: none;
-  color: white;
-}
-
-.file-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: rgba(255,255,255,.16);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 19px;
-  flex-shrink: 0;
-}
-
-.file-name {
-  font-size: 13px;
-  max-width: 170px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* ================= INPUT ================= */
-
-.input-area {
-  width: 100%;
-  min-height: 55px;
-  padding: 5px 6px;
-  padding-bottom: max(5px, env(safe-area-inset-bottom));
-  background: #202b36;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  flex-shrink: 0;
-}
-
 .file-button {
-  width: 38px;
-  height: 38px;
-  border: none;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
-  background: transparent;
-  color: #aebbc5;
-  font-size: 21px;
+  background: #263544;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  font-size: 23px;
   cursor: pointer;
   flex-shrink: 0;
 }
 
 .file-button:active {
-  background: rgba(255,255,255,.08);
+  transform: scale(.95);
+}
+
+.file-preview {
+  margin-top: 5px;
+}
+
+.chat-image {
+  max-width: 100%;
+  max-height: 350px;
+  border-radius: 12px;
+  display: block;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.chat-file {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+  padding: 9px 11px;
+  border-radius: 10px;
+  background: rgba(0,0,0,.15);
+}
+
+.chat-file a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.chat-file a:hover {
+  text-decoration: underline;
+}
+
+.file-size {
+  font-size: 11px;
+  opacity: .7;
+  margin-top: 2px;
+}
+
+/* ================= INPUT ================= */
+
+.input-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: #202b36;
 }
 
 #msg {
   flex: 1;
   min-width: 0;
-  height: 40px;
   border: none;
   outline: none;
-  border-radius: 20px;
-  padding: 0 13px;
+  border-radius: 25px;
+  padding: 12px 16px;
   background: #263544;
   color: white;
-  font-size: 15px;
+  font-size: 17px;
 }
 
 #msg::placeholder {
@@ -357,73 +308,35 @@ input {
 }
 
 .send {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border: none;
   border-radius: 50%;
   background: #2ea6ff;
   color: white;
-  font-size: 18px;
+  font-size: 22px;
   cursor: pointer;
-  flex-shrink: 0;
 }
 
-.send:active {
-  transform: scale(.94);
+.send:disabled {
+  opacity: .5;
+  cursor: wait;
 }
 
-#fileInput {
-  display: none;
-}
-
-/* ================= UPLOAD ================= */
-
-#uploadStatus {
-  position: fixed;
-  left: 50%;
-  bottom: 65px;
-  transform: translateX(-50%);
-  background: #202b36;
-  color: white;
-  padding: 8px 13px;
-  border-radius: 17px;
-  font-size: 12px;
-  display: none;
-  z-index: 2000;
-  box-shadow: 0 3px 15px rgba(0,0,0,.4);
-  white-space: nowrap;
-}
-
-/* ================= ERROR ================= */
-
-#errorBox {
-  display: none;
-  position: fixed;
-  left: 10px;
-  right: 10px;
-  top: 65px;
-  z-index: 3000;
-  background: #8b2635;
-  color: white;
-  padding: 10px 12px;
-  border-radius: 10px;
-  font-size: 13px;
-  line-height: 1.35;
-}
-
-/* ================= MENU ================= */
+/* ================= SIDE MENU ================= */
 
 #sideMenu {
   position: fixed;
   top: 0;
   left: 0;
-  width: 270px;
-  max-width: 82vw;
-  height: 100dvh;
+  width: 290px;
+  height: 100vh;
   background: #202b36;
   z-index: 1000;
+
   transform: translateX(-100%);
   transition: transform .25s ease;
+
   box-shadow: 4px 0 15px rgba(0,0,0,.4);
 }
 
@@ -444,87 +357,87 @@ input {
 }
 
 .menuProfile {
-  height: 125px;
-  padding: 18px;
+  height: 155px;
+  padding: 25px 18px;
+
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 15px;
+
   background: #17212b;
 }
 
 .menuAvatar {
-  width: 52px;
-  height: 52px;
+  width: 60px;
+  height: 60px;
+
   border-radius: 50%;
   background: #2ea6ff;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+
+  font-size: 27px;
   font-weight: bold;
 }
 
 .menuName {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
 }
 
 .menuOnline {
-  margin-top: 4px;
-  font-size: 11px;
+  margin-top: 5px;
+  font-size: 13px;
   color: #35d07f;
 }
 
 .menuItem {
-  padding: 14px 18px;
-  font-size: 15px;
+  padding: 18px 22px;
+  font-size: 17px;
   cursor: pointer;
 }
 
-.menuItem:active {
+.menuItem:hover {
   background: #263544;
 }
 
-/* ================= MOBILE ================= */
+/* ================= UPLOAD ================= */
 
-@media (max-width: 600px) {
+#uploadStatus {
+  display: none;
+  position: fixed;
+  left: 50%;
+  bottom: 75px;
+  transform: translateX(-50%);
 
-  .message {
-    max-width: 84%;
-  }
+  background: #202b36;
+  color: white;
 
-  .chat-image {
-    max-width: 205px;
-    max-height: 270px;
-  }
-}
+  padding: 10px 16px;
+  border-radius: 20px;
 
-@media (max-height: 650px) {
+  font-size: 14px;
+  z-index: 2000;
 
-  .header {
-    height: 50px;
-    min-height: 50px;
-  }
-
-  .input-area {
-    min-height: 50px;
-  }
-
-  #msg {
-    height: 36px;
-  }
-
-  .send,
-  .file-button {
-    width: 36px;
-    height: 36px;
-  }
+  box-shadow: 0 3px 12px rgba(0,0,0,.4);
 }
 
 </style>
+
 </head>
 
 <body>
+
+<!-- ================= UPLOAD STATUS ================= -->
+
+<div id="uploadStatus">
+  ⏳ Загрузка файла...
+</div>
+
+
+<!-- ================= SIDE MENU ================= -->
 
 <div id="menuOverlay" onclick="closeMenu()"></div>
 
@@ -532,11 +445,20 @@ input {
 
   <div class="menuProfile">
 
-    <div class="menuAvatar" id="menuAvatar">?</div>
+    <div class="menuAvatar" id="menuAvatar">
+      ?
+    </div>
 
     <div>
-      <div class="menuName" id="menuName">Пользователь</div>
-      <div class="menuOnline">🟢 онлайн</div>
+
+      <div class="menuName" id="menuName">
+        Пользователь
+      </div>
+
+      <div class="menuOnline">
+        🟢 онлайн
+      </div>
+
     </div>
 
   </div>
@@ -545,7 +467,10 @@ input {
     👤 &nbsp; Мой профиль
   </div>
 
-  <div class="menuItem" onclick="openContacts(); closeMenu()">
+  <div
+    class="menuItem"
+    onclick="openContacts(); closeMenu()"
+  >
     💬 &nbsp; Контакты
   </div>
 
@@ -555,21 +480,20 @@ input {
 
 </div>
 
-<div id="uploadStatus">
-  ⏳ Загрузка файла...
-</div>
 
-<div id="errorBox"></div>
+<!-- ================= APP ================= -->
 
 <div class="app">
 
-  <!-- ================= CONTACTS ================= -->
+  <!-- CONTACTS -->
 
   <div id="contactsScreen">
 
     <div class="header">
 
-      <button onclick="openMenu()">☰</button>
+      <button onclick="openMenu()">
+        ☰
+      </button>
 
       <div>
 
@@ -577,48 +501,70 @@ input {
           NicChat
         </div>
 
-        <div class="header-status" id="usersCount">
-          Подключение...
+        <div
+          class="header-status"
+          id="usersCount"
+        >
+          Загрузка...
         </div>
 
       </div>
 
     </div>
+
 
     <div class="search">
 
       <input
         id="search"
         placeholder="🔎 Поиск"
-        autocomplete="off">
+        autocomplete="off"
+      >
 
     </div>
+
 
     <div id="contacts"></div>
 
   </div>
 
-  <!-- ================= CHAT ================= -->
+
+  <!-- CHAT -->
 
   <div id="chatScreen">
 
     <div class="header">
 
-      <button onclick="openContacts()">←</button>
+      <button onclick="openContacts()">
+        ←
+      </button>
 
       <div
-        class="avatar chat-header-avatar"
-        id="chatAvatar">
+        class="avatar"
+        id="chatAvatar"
+        style="
+          width:42px;
+          height:42px;
+          margin:0;
+          font-size:18px;
+        "
+      >
         ?
       </div>
 
       <div>
 
-        <div class="header-title" id="chatName">
+        <div
+          class="header-title"
+          id="chatName"
+        >
           Чат
         </div>
 
-        <div class="header-status" id="chatStatus">
+        <div
+          class="header-status"
+          id="chatStatus"
+        >
           ...
         </div>
 
@@ -626,30 +572,43 @@ input {
 
     </div>
 
+
     <div id="chat"></div>
+
 
     <div class="input-area">
 
-      <button
-        class="file-button"
-        onclick="chooseFile()"
-        title="Фото или файл">
-        📎
-      </button>
+      <!-- FILE BUTTON -->
 
-      <input
-        type="file"
-        id="fileInput"
-        accept="image/*,.pdf,.txt,.doc,.docx,.xls,.xlsx,.zip">
+      <label class="file-button">
+
+        📎
+
+        <input
+          type="file"
+          id="fileInput"
+          hidden
+        >
+
+      </label>
+
+
+      <!-- MESSAGE -->
 
       <input
         id="msg"
-        placeholder="Сообщение..."
-        autocomplete="off">
+        placeholder="Написать сообщение..."
+        autocomplete="off"
+      >
+
+
+      <!-- SEND -->
 
       <button
         class="send"
-        onclick="sendMessage()">
+        id="sendButton"
+        onclick="sendMessage()"
+      >
         ➤
       </button>
 
@@ -659,12 +618,17 @@ input {
 
 </div>
 
+
 <script type="module">
+
+/* ================= FIREBASE APP ================= */
 
 import {
   initializeApp
-} from
-"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+
+/* ================= DATABASE ================= */
 
 import {
   getDatabase,
@@ -674,83 +638,59 @@ import {
   onValue,
   onChildAdded,
   onDisconnect,
-  off
-} from
-"https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+  off,
+  remove
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+
+/* ================= STORAGE ================= */
 
 import {
   getStorage,
   ref as storageRef,
   uploadBytes,
   getDownloadURL
-} from
-"https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 
-/* ================= FIREBASE ================= */
+/* ================= FIREBASE CONFIG ================= */
 
-const firebaseConfig = {
+const app = initializeApp({
 
   apiKey:
-  "AIzaSyAVsq99vOv_H3QxukyZBFEzb4zR1J5ha68",
+    "AIzaSyAVsq99vOv_H3QxukyZBFEzb4zR1J5ha68",
 
   authDomain:
-  "chats-2e309.firebaseapp.com",
+    "chats-2e309.firebaseapp.com",
 
   projectId:
-  "chats-2e309",
+    "chats-2e309",
 
   storageBucket:
-  "chats-2e309.firebasestorage.app",
+    "chats-2e309.firebasestorage.app",
 
   messagingSenderId:
-  "888879915328",
+    "888879915328",
 
   appId:
-  "1:888879915328:web:ece055c1794243915c9aa5",
+    "1:888879915328:web:ece055c1794243915c9aa5",
 
   databaseURL:
-  "https://chats-2e309-default-rtdb.firebaseio.com"
-};
+    "https://chats-2e309-default-rtdb.firebaseio.com"
 
-const app =
-  initializeApp(firebaseConfig);
-
-const db =
-  getDatabase(app);
-
-const storage =
-  getStorage(app);
+});
 
 
-/* ================= ERROR ================= */
+const db = getDatabase(app);
 
-function showError(message) {
-
-  console.error(message);
-
-  const box =
-    document.getElementById("errorBox");
-
-  box.textContent =
-    "⚠️ " + message;
-
-  box.style.display =
-    "block";
-
-  setTimeout(() => {
-
-    box.style.display =
-      "none";
-
-  }, 7000);
-}
+const storage = getStorage(app);
 
 
 /* ================= NICK ================= */
 
 let n =
   localStorage.getItem("n");
+
 
 if (!n) {
 
@@ -764,6 +704,7 @@ if (!n) {
       Math.floor(
         Math.random() * 99999
       );
+
   }
 
   n =
@@ -773,13 +714,13 @@ if (!n) {
     "n",
     n
   );
+
 }
 
 
 /* ================= MENU ================= */
 
-window.openMenu =
-function() {
+window.openMenu = function() {
 
   document
     .getElementById("sideMenu")
@@ -796,12 +737,12 @@ function() {
   document
     .getElementById("menuAvatar")
     .textContent =
-    n.charAt(0).toUpperCase();
+      n.charAt(0).toUpperCase();
+
 };
 
 
-window.closeMenu =
-function() {
+window.closeMenu = function() {
 
   document
     .getElementById("sideMenu")
@@ -810,6 +751,7 @@ function() {
   document
     .getElementById("menuOverlay")
     .classList.remove("open");
+
 };
 
 
@@ -818,8 +760,9 @@ function() {
 function userKey(name) {
 
   return encodeURIComponent(
-    String(name)
+    name
   );
+
 }
 
 
@@ -827,6 +770,7 @@ function userKey(name) {
 
 const myKey =
   userKey(n);
+
 
 set(
   ref(
@@ -837,14 +781,7 @@ set(
     name: n,
     created: Date.now()
   }
-).catch(error => {
-
-  showError(
-    "Не удалось записать пользователя: " +
-    error.message
-  );
-
-});
+);
 
 
 /* ================= ONLINE ================= */
@@ -855,17 +792,12 @@ const onlineRef =
     "online/" + myKey
   );
 
+
 set(
   onlineRef,
   true
-).catch(error => {
+);
 
-  showError(
-    "Ошибка статуса онлайн: " +
-    error.message
-  );
-
-});
 
 onDisconnect(
   onlineRef
@@ -876,37 +808,15 @@ onDisconnect(
 
 let contactsData = {};
 
-let contactStatusListeners = {};
-
 
 onValue(
   ref(db, "users"),
-
   snapshot => {
 
     contactsData =
       snapshot.val() || {};
 
     renderContacts();
-
-    document
-      .getElementById("usersCount")
-      .textContent =
-      "Контакты загружены";
-
-  },
-
-  error => {
-
-    showError(
-      "Firebase не разрешил чтение пользователей: " +
-      error.message
-    );
-
-    document
-      .getElementById("usersCount")
-      .textContent =
-      "Ошибка подключения";
 
   }
 );
@@ -917,7 +827,10 @@ onValue(
 function renderContacts() {
 
   const container =
-    document.getElementById("contacts");
+    document.getElementById(
+      "contacts"
+    );
+
 
   const search =
     document
@@ -926,7 +839,9 @@ function renderContacts() {
       .toLowerCase()
       .trim();
 
+
   container.innerHTML = "";
+
 
   const users =
     Object.values(
@@ -934,11 +849,18 @@ function renderContacts() {
     )
     .filter(user => {
 
-      if (!user || !user.name)
+      if (
+        !user ||
+        !user.name
+      )
         return false;
 
-      if (user.name === n)
+
+      if (
+        user.name === n
+      )
         return false;
+
 
       return user.name
         .toLowerCase()
@@ -948,14 +870,16 @@ function renderContacts() {
 
 
   document
-    .getElementById("usersCount")
+    .getElementById(
+      "usersCount"
+    )
     .textContent =
-    users.length +
-    (
-      users.length === 1
-      ? " пользователь"
-      : " пользователей"
-    );
+      users.length +
+      (
+        users.length === 1
+          ? " пользователь"
+          : " пользователей"
+      );
 
 
   if (!users.length) {
@@ -967,102 +891,118 @@ function renderContacts() {
     `;
 
     return;
+
   }
 
 
-  users.forEach(user => {
+  users.forEach(
+    user => {
 
-    const key =
-      userKey(user.name);
-
-    const div =
-      document.createElement("div");
-
-    div.className =
-      "contact";
-
-    div.innerHTML = `
-
-      <div class="avatar">
-        ${escapeHTML(
+      const key =
+        userKey(
           user.name
-            .charAt(0)
-            .toUpperCase()
-        )}
-      </div>
+        );
 
-      <div class="contact-info">
 
-        <div class="contact-name">
-          ${escapeHTML(user.name)}
+      const div =
+        document.createElement(
+          "div"
+        );
+
+
+      div.className =
+        "contact";
+
+
+      div.innerHTML = `
+
+        <div class="avatar">
+          ${escapeHTML(
+            user.name
+              .charAt(0)
+              .toUpperCase()
+          )}
         </div>
 
-        <div
-          class="contact-status"
-          id="status-${key}">
-          проверка...
+        <div class="contact-info">
+
+          <div class="contact-name">
+            ${escapeHTML(
+              user.name
+            )}
+          </div>
+
+          <div
+            class="contact-status"
+            id="status-${key}"
+          >
+            проверка...
+          </div>
+
         </div>
 
-      </div>
-    `;
+      `;
 
 
-    div.onclick =
-      () => openChat(user.name);
+      div.onclick =
+        () => {
+
+          openChat(
+            user.name
+          );
+
+        };
 
 
-    container.appendChild(div);
+      container.appendChild(
+        div
+      );
 
 
-    /* Только один listener на пользователя */
-
-    if (!contactStatusListeners[key]) {
-
-      const statusRef =
+      onValue(
         ref(
           db,
           "online/" + key
-        );
+        ),
+        snapshot => {
 
-      contactStatusListeners[key] =
-        onValue(
-          statusRef,
+          const status =
+            document.getElementById(
+              "status-" + key
+            );
 
-          snapshot => {
 
-            const status =
-              document.getElementById(
-                "status-" + key
-              );
+          if (!status)
+            return;
 
-            if (!status)
-              return;
 
-            if (
-              snapshot.val() === true
-            ) {
+          if (
+            snapshot.val() === true
+          ) {
 
-              status.textContent =
-                "🟢 в сети";
+            status.textContent =
+              "🟢 в сети";
 
-              status.classList.add(
-                "online"
-              );
+            status.classList.add(
+              "online"
+            );
 
-            } else {
+          } else {
 
-              status.textContent =
-                "был(а) недавно";
+            status.textContent =
+              "был(а) недавно";
 
-              status.classList.remove(
-                "online"
-              );
-            }
+            status.classList.remove(
+              "online"
+            );
+
           }
-        );
-    }
 
-  });
+        }
+      );
+
+    }
+  );
 
 }
 
@@ -1082,31 +1022,69 @@ document
 function escapeHTML(text) {
 
   return String(text)
-
     .replaceAll(
       "&",
       "&amp;"
     )
-
     .replaceAll(
       "<",
       "&lt;"
     )
-
     .replaceAll(
       ">",
       "&gt;"
     )
-
     .replaceAll(
       '"',
       "&quot;"
     )
-
     .replaceAll(
       "'",
       "&#039;"
     );
+
+}
+
+
+/* ================= FILE SIZE ================= */
+
+function formatFileSize(bytes) {
+
+  if (
+    !bytes ||
+    bytes <= 0
+  )
+    return "";
+
+  if (
+    bytes < 1024
+  )
+    return bytes + " Б";
+
+  if (
+    bytes < 1024 * 1024
+  )
+    return (
+      (bytes / 1024)
+        .toFixed(1) +
+      " КБ"
+    );
+
+  if (
+    bytes < 1024 * 1024 * 1024
+  )
+    return (
+      (bytes / (1024 * 1024))
+        .toFixed(1) +
+      " МБ"
+    );
+
+  return (
+    (bytes / (1024 * 1024 * 1024))
+      .toFixed(1) +
+    " ГБ"
+  );
+
 }
 
 
@@ -1125,27 +1103,23 @@ function chatId(
 
   ].sort();
 
+
   return (
     users[0] +
     "_" +
     users[1]
   );
+
 }
 
 
 /* ================= OPEN CHAT ================= */
 
-let selectedUser =
-  null;
+let selectedUser = null;
 
-let selectedChat =
-  null;
+let selectedChat = null;
 
-let messageListener =
-  null;
-
-let statusListener =
-  null;
+let messageListener = null;
 
 
 window.openChat =
@@ -1153,6 +1127,7 @@ function(username) {
 
   selectedUser =
     username;
+
 
   selectedChat =
     chatId(
@@ -1166,14 +1141,15 @@ function(username) {
       "contactsScreen"
     )
     .style.display =
-    "none";
+      "none";
+
 
   document
     .getElementById(
       "chatScreen"
     )
     .style.display =
-    "flex";
+      "flex";
 
 
   document
@@ -1181,7 +1157,7 @@ function(username) {
       "chatName"
     )
     .textContent =
-    username;
+      username;
 
 
   document
@@ -1189,9 +1165,9 @@ function(username) {
       "chatAvatar"
     )
     .textContent =
-    username
-      .charAt(0)
-      .toUpperCase();
+      username
+        .charAt(0)
+        .toUpperCase();
 
 
   document
@@ -1199,10 +1175,8 @@ function(username) {
       "chat"
     )
     .innerHTML =
-    "";
+      "";
 
-
-  /* Удаляем старый listener */
 
   if (messageListener) {
 
@@ -1217,36 +1191,16 @@ function(username) {
   }
 
 
-  if (statusListener) {
-
-    off(
-      ref(
-        db,
-        "online/" +
-        statusListener
-      )
-    );
-
-  }
-
-
   messageListener =
     selectedChat;
 
-  statusListener =
-    userKey(username);
-
-
-  /* ================= ONLINE STATUS ================= */
 
   onValue(
-
     ref(
       db,
       "online/" +
-      statusListener
+      userKey(username)
     ),
-
     snapshot => {
 
       const status =
@@ -1254,8 +1208,6 @@ function(username) {
           "chatStatus"
         );
 
-      if (!status)
-        return;
 
       if (
         snapshot.val() === true
@@ -1274,49 +1226,26 @@ function(username) {
 
         status.style.color =
           "#8495a0";
+
       }
 
-    },
-
-    error => {
-
-      console.error(
-        "Status error:",
-        error
-      );
-
     }
-
   );
 
 
-  /* ================= MESSAGES ================= */
-
   onChildAdded(
-
     ref(
       db,
       "chats/" +
       selectedChat
     ),
-
     snapshot => {
 
       showMessage(
         snapshot.val()
       );
 
-    },
-
-    error => {
-
-      showError(
-        "Ошибка загрузки сообщений: " +
-        error.message
-      );
-
     }
-
   );
 
 };
@@ -1350,8 +1279,8 @@ function showMessage(m) {
     "message-row " +
     (
       my
-      ? "my"
-      : "other"
+        ? "my"
+        : "other"
     );
 
 
@@ -1365,8 +1294,33 @@ function showMessage(m) {
     "message " +
     (
       my
-      ? "my"
-      : "other"
+        ? "my"
+        : "other"
+    );
+
+
+  const date =
+    new Date(
+      m.time ||
+      Date.now()
+    );
+
+
+  const h =
+    String(
+      date.getHours()
+    ).padStart(
+      2,
+      "0"
+    );
+
+
+  const min =
+    String(
+      date.getMinutes()
+    ).padStart(
+      2,
+      "0"
     );
 
 
@@ -1374,23 +1328,55 @@ function showMessage(m) {
     "";
 
 
+  /* ================= TEXT ================= */
+
+  if (m.text) {
+
+    content += `
+
+      <div class="message-text">
+        ${escapeHTML(
+          m.text
+        )}
+      </div>
+
+    `;
+
+  }
+
+
   /* ================= IMAGE ================= */
 
   if (
-    m.type === "image" &&
-    m.url
+    m.fileURL &&
+    m.fileType &&
+    m.fileType.startsWith(
+      "image/"
+    )
   ) {
 
-    content = `
+    content += `
 
-      <img
-        src="${escapeHTML(m.url)}"
-        class="chat-image"
-        loading="lazy"
-        onclick="window.open(
-          '${escapeHTML(m.url)}',
-          '_blank'
-        )">
+      <a
+        href="${escapeHTML(
+          m.fileURL
+        )}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+
+        <img
+          class="chat-image"
+          src="${escapeHTML(
+            m.fileURL
+          )}"
+          alt="${escapeHTML(
+            m.fileName ||
+            "Фото"
+          )}"
+        >
+
+      </a>
 
     `;
 
@@ -1400,16 +1386,137 @@ function showMessage(m) {
   /* ================= FILE ================= */
 
   else if (
-    m.type === "file" &&
-    m.url
+    m.fileURL
   ) {
 
-    content = `
+    content += `
 
-      <a
-        href="${escapeHTML(m.url)}"
-        target="_blank"
-        rel="noopener"
-        class="file-message">
+      <div class="chat-file">
 
-        <div
+        <div>
+          📎
+        </div>
+
+        <div>
+
+          <a
+            href="${escapeHTML(
+              m.fileURL
+            )}"
+            target="_blank"
+            rel="noopener noreferrer"
+            download
+          >
+            ${escapeHTML(
+              m.fileName ||
+              "Файл"
+            )}
+          </a>
+
+          ${
+            m.fileSize
+              ?
+              `
+              <div class="file-size">
+                ${formatFileSize(
+                  m.fileSize
+                )}
+              </div>
+              `
+              :
+              ""
+          }
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  bubble.innerHTML = `
+
+    ${
+      !my
+      ?
+      `
+      <div class="message-name">
+        ${escapeHTML(
+          m.from
+        )}
+      </div>
+      `
+      :
+      ""
+    }
+
+    ${content}
+
+    <div class="message-bottom">
+
+      <span>
+        ${h}:${min}
+      </span>
+
+      ${
+        my
+        ?
+        "<span>✔✔</span>"
+        :
+        ""
+      }
+
+    </div>
+
+  `;
+
+
+  row.appendChild(
+    bubble
+  );
+
+
+  chat.appendChild(
+    row
+  );
+
+
+  chat.scrollTop =
+    chat.scrollHeight;
+
+}
+
+
+/* ================= SEND MESSAGE ================= */
+
+window.sendMessage =
+async function() {
+
+  const input =
+    document.getElementById(
+      "msg"
+    );
+
+
+  const fileInput =
+    document.getElementById(
+      "fileInput"
+    );
+
+
+  const sendButton =
+    document.getElementById(
+      "sendButton"
+    );
+
+
+  const uploadStatus =
+    document.getElementById(
+      "uploadStatus"
+    );
+
+
+  const text =
+    input.va
