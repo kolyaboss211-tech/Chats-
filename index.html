@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Мой чат</title>
 
 <style>
@@ -19,14 +18,15 @@ body {
   overflow: hidden;
 }
 
-/* Весь чат */
+/* ================= APP ================= */
+
 .app {
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* ===== ШАПКА ===== */
+/* ================= HEADER ================= */
 
 .header {
   height: 60px;
@@ -39,6 +39,8 @@ body {
 }
 
 .header button {
+  width: 42px;
+  height: 42px;
   border: none;
   background: transparent;
   color: white;
@@ -47,17 +49,17 @@ body {
 }
 
 .header-title {
-  font-size: 21px;
+  font-size: 20px;
   font-weight: bold;
 }
 
 .header-status {
   font-size: 13px;
-  color: #8aa0ad;
+  color: #8b9ba5;
   margin-top: 2px;
 }
 
-/* ===== КОНТАКТЫ ===== */
+/* ================= CONTACTS ================= */
 
 #contactsScreen {
   height: 100%;
@@ -89,8 +91,6 @@ body {
   flex: 1;
   overflow-y: auto;
 }
-
-/* Контакт */
 
 .contact {
   display: flex;
@@ -125,9 +125,6 @@ body {
 .contact-name {
   font-size: 17px;
   font-weight: bold;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .contact-status {
@@ -140,7 +137,13 @@ body {
   color: #35d07f;
 }
 
-/* ===== ЧАТ ===== */
+.empty {
+  text-align: center;
+  color: #82909a;
+  padding: 30px;
+}
+
+/* ================= CHAT ================= */
 
 #chatScreen {
   height: 100%;
@@ -152,17 +155,7 @@ body {
   flex: 1;
   overflow-y: auto;
   padding: 10px 8px;
-  scroll-behavior: smooth;
-
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(255,255,255,.015),
-      transparent 60%
-    );
 }
-
-/* Сообщение */
 
 .message-row {
   display: flex;
@@ -210,14 +203,13 @@ body {
 .message-bottom {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
   gap: 4px;
   margin-top: 4px;
   font-size: 11px;
   color: rgba(255,255,255,.75);
 }
 
-/* ===== ВВОД ===== */
+/* ================= INPUT ================= */
 
 .input-area {
   display: flex;
@@ -237,7 +229,6 @@ body {
   background: #263544;
   color: white;
   font-size: 17px;
-  font-weight: 500;
 }
 
 #msg::placeholder {
@@ -255,83 +246,214 @@ body {
   cursor: pointer;
 }
 
-.send:active {
-  transform: scale(.94);
+/* ================= SIDE MENU ================= */
+
+#sideMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 290px;
+  height: 100vh;
+  background: #202b36;
+  z-index: 1000;
+
+  transform: translateX(-100%);
+  transition: transform .25s ease;
+
+  box-shadow: 4px 0 15px rgba(0,0,0,.4);
 }
 
-/* Пустой список */
+#sideMenu.open {
+  transform: translateX(0);
+}
 
-.empty {
-  text-align: center;
-  color: #82909a;
-  padding: 30px;
-  font-size: 15px;
+#menuOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 999;
+  display: none;
+}
+
+#menuOverlay.open {
+  display: block;
+}
+
+.menuProfile {
+  height: 155px;
+  padding: 25px 18px;
+
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  background: #17212b;
+}
+
+.menuAvatar {
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+  background: #2ea6ff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 27px;
+  font-weight: bold;
+}
+
+.menuName {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.menuOnline {
+  margin-top: 5px;
+  font-size: 13px;
+  color: #35d07f;
+}
+
+.menuItem {
+  padding: 18px 22px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.menuItem:hover {
+  background: #263544;
 }
 </style>
 </head>
 
 <body>
 
+<!-- ================= SIDE MENU ================= -->
+
+<div id="menuOverlay" onclick="closeMenu()"></div>
+
+<div id="sideMenu">
+
+  <div class="menuProfile">
+
+    <div class="menuAvatar" id="menuAvatar">
+      ?
+    </div>
+
+    <div>
+      <div class="menuName" id="menuName">
+        Пользователь
+      </div>
+
+      <div class="menuOnline">
+        🟢 онлайн
+      </div>
+    </div>
+
+  </div>
+
+  <div class="menuItem" onclick="closeMenu()">
+    👤 &nbsp; Мой профиль
+  </div>
+
+  <div
+    class="menuItem"
+    onclick="openContacts(); closeMenu()"
+  >
+    💬 &nbsp; Контакты
+  </div>
+
+  <div class="menuItem">
+    ⚙️ &nbsp; Настройки
+  </div>
+
+</div>
+
+
+<!-- ================= APP ================= -->
+
 <div class="app">
 
-  <!-- ================= КОНТАКТЫ ================= -->
+  <!-- CONTACTS -->
 
   <div id="contactsScreen">
 
     <div class="header">
-      <button onclick="openContacts()">☰</button>
+
+      <button onclick="openMenu()">
+        ☰
+      </button>
 
       <div>
-        <div class="header-title">Контакты</div>
+        <div class="header-title">
+          Контакты
+        </div>
+
         <div class="header-status" id="usersCount">
           Загрузка...
         </div>
       </div>
+
     </div>
 
+
     <div class="search">
+
       <input
         id="search"
         placeholder="🔎 Поиск"
         autocomplete="off"
       >
+
     </div>
+
 
     <div id="contacts"></div>
 
   </div>
 
 
-  <!-- ================= ЧАТ ================= -->
+  <!-- CHAT -->
 
   <div id="chatScreen">
 
     <div class="header">
 
-      <button onclick="openContacts()">‹</button>
+      <button onclick="openContacts()">
+        ←
+      </button>
 
-      <div style="
-        width:42px;
-        height:42px;
-        border-radius:50%;
-        background:#2ea6ff;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        font-weight:bold;
-        font-size:18px;
-      " id="chatAvatar">
+      <div
+        class="avatar"
+        id="chatAvatar"
+        style="
+          width:42px;
+          height:42px;
+          margin:0;
+          font-size:18px;
+        "
+      >
         ?
       </div>
 
       <div>
-        <div class="header-title" id="chatName">
+
+        <div
+          class="header-title"
+          id="chatName"
+        >
           Чат
         </div>
 
-        <div class="header-status" id="chatStatus">
+        <div
+          class="header-status"
+          id="chatStatus"
+        >
           ...
         </div>
+
       </div>
 
     </div>
@@ -348,7 +470,10 @@ body {
         autocomplete="off"
       >
 
-      <button class="send" onclick="sendMessage()">
+      <button
+        class="send"
+        onclick="sendMessage()"
+      >
         ➤
       </button>
 
@@ -360,10 +485,6 @@ body {
 
 
 <script type="module">
-
-/* =====================================================
-   FIREBASE
-===================================================== */
 
 import {
   initializeApp
@@ -382,9 +503,12 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 
+/* ================= FIREBASE ================= */
+
 const app = initializeApp({
 
-  apiKey: "AIzaSyAVsq99vOv_H3QxukyZBFEzb4zR1J5ha68",
+  apiKey:
+    "AIzaSyAVsq99vOv_H3QxukyZBFEzb4zR1J5ha68",
 
   authDomain:
     "chats-2e309.firebaseapp.com",
@@ -410,24 +534,9 @@ const app = initializeApp({
 const db = getDatabase(app);
 
 
-/* =====================================================
-   ПЕРЕМЕННЫЕ
-===================================================== */
+/* ================= NICK ================= */
 
 let n = localStorage.getItem("n");
-
-let selectedUser = null;
-
-let selectedChat = null;
-
-let messageListener = null;
-
-let contactsData = {};
-
-
-/* =====================================================
-   НИК ПОЛЬЗОВАТЕЛЯ
-===================================================== */
 
 if (!n) {
 
@@ -435,48 +544,65 @@ if (!n) {
 
   if (!n || !n.trim()) {
 
-    n = "User" + Math.floor(Math.random() * 99999);
+    n =
+      "User" +
+      Math.floor(Math.random() * 99999);
 
   }
 
   n = n.trim();
 
   localStorage.setItem("n", n);
-
 }
 
 
-/* =====================================================
-   БЕЗОПАСНЫЙ HTML
-===================================================== */
+/* ================= MENU ================= */
 
-function escapeHTML(text) {
+window.openMenu = function() {
 
-  return String(text)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+  document
+    .getElementById("sideMenu")
+    .classList.add("open");
 
-}
+  document
+    .getElementById("menuOverlay")
+    .classList.add("open");
+
+  document
+    .getElementById("menuName")
+    .textContent = n;
+
+  document
+    .getElementById("menuAvatar")
+    .textContent =
+      n.charAt(0).toUpperCase();
+
+};
 
 
-/* =====================================================
-   КЛЮЧ ДЛЯ FIREBASE
-===================================================== */
+window.closeMenu = function() {
+
+  document
+    .getElementById("sideMenu")
+    .classList.remove("open");
+
+  document
+    .getElementById("menuOverlay")
+    .classList.remove("open");
+
+};
+
+
+/* ================= USER KEY ================= */
 
 function userKey(name) {
 
-  return encodeURIComponent(name)
-    .replace(/\./g, "%2E");
+  return encodeURIComponent(name);
 
 }
 
 
-/* =====================================================
-   СОЗДАЁМ СЕБЯ В СПИСКЕ ПОЛЬЗОВАТЕЛЕЙ
-===================================================== */
+/* ================= MY USER ================= */
 
 const myKey = userKey(n);
 
@@ -489,9 +615,7 @@ set(
 );
 
 
-/* =====================================================
-   ONLINE
-===================================================== */
+/* ================= ONLINE ================= */
 
 const onlineRef =
   ref(db, "online/" + myKey);
@@ -501,15 +625,16 @@ set(onlineRef, true);
 onDisconnect(onlineRef).remove();
 
 
-/* =====================================================
-   ПОЛУЧАЕМ СПИСОК ПОЛЬЗОВАТЕЛЕЙ
-===================================================== */
+/* ================= CONTACTS ================= */
+
+let contactsData = {};
 
 onValue(
   ref(db, "users"),
   snapshot => {
 
-    contactsData = snapshot.val() || {};
+    contactsData =
+      snapshot.val() || {};
 
     renderContacts();
 
@@ -517,9 +642,7 @@ onValue(
 );
 
 
-/* =====================================================
-   ПОКАЗ КОНТАКТОВ
-===================================================== */
+/* ================= RENDER CONTACTS ================= */
 
 function renderContacts() {
 
@@ -533,7 +656,6 @@ function renderContacts() {
       .toLowerCase()
       .trim();
 
-
   container.innerHTML = "";
 
 
@@ -541,30 +663,31 @@ function renderContacts() {
     Object.values(contactsData)
       .filter(user => {
 
-        if (!user || !user.name) {
+        if (!user || !user.name)
           return false;
-        }
 
-        if (user.name === n) {
+        if (user.name === n)
           return false;
-        }
 
         return user.name
           .toLowerCase()
           .includes(search);
 
-      })
-      .sort((a,b) =>
-        a.name.localeCompare(b.name)
+      });
+
+
+  document
+    .getElementById("usersCount")
+    .textContent =
+      users.length +
+      (
+        users.length === 1
+          ? " пользователь"
+          : " пользователей"
       );
 
 
-  document.getElementById("usersCount").textContent =
-    users.length +
-    (users.length === 1 ? " пользователь" : " пользователей");
-
-
-  if (users.length === 0) {
+  if (!users.length) {
 
     container.innerHTML = `
       <div class="empty">
@@ -573,29 +696,24 @@ function renderContacts() {
     `;
 
     return;
-
   }
 
 
   users.forEach(user => {
 
-    const key = userKey(user.name);
+    const key =
+      userKey(user.name);
 
     const div =
       document.createElement("div");
 
     div.className = "contact";
 
-    const firstLetter =
-      user.name
-        .charAt(0)
-        .toUpperCase();
-
 
     div.innerHTML = `
 
       <div class="avatar">
-        ${escapeHTML(firstLetter)}
+        ${user.name.charAt(0).toUpperCase()}
       </div>
 
       <div class="contact-info">
@@ -626,8 +744,6 @@ function renderContacts() {
     container.appendChild(div);
 
 
-    /* Проверяем online */
-
     onValue(
       ref(db, "online/" + key),
       snapshot => {
@@ -637,20 +753,27 @@ function renderContacts() {
             "status-" + key
           );
 
-        if (!status) return;
+        if (!status)
+          return;
 
 
         if (snapshot.val() === true) {
 
-          status.textContent = "🟢 в сети";
+          status.textContent =
+            "🟢 в сети";
 
-          status.classList.add("online");
+          status.classList.add(
+            "online"
+          );
 
         } else {
 
-          status.textContent = "был(а) недавно";
+          status.textContent =
+            "был(а) недавно";
 
-          status.classList.remove("online");
+          status.classList.remove(
+            "online"
+          );
 
         }
 
@@ -662,9 +785,7 @@ function renderContacts() {
 }
 
 
-/* =====================================================
-   ПОИСК
-===================================================== */
+/* ================= SEARCH ================= */
 
 document
   .getElementById("search")
@@ -674,9 +795,21 @@ document
   );
 
 
-/* =====================================================
-   ID ЛИЧНОГО ЧАТА
-===================================================== */
+/* ================= ESCAPE ================= */
+
+function escapeHTML(text) {
+
+  return String(text)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+/* ================= CHAT ID ================= */
 
 function chatId(user1, user2) {
 
@@ -690,9 +823,12 @@ function chatId(user1, user2) {
 }
 
 
-/* =====================================================
-   ОТКРЫТЬ ЧАТ
-===================================================== */
+/* ================= OPEN CHAT ================= */
+
+let selectedUser = null;
+let selectedChat = null;
+let messageListener = null;
+
 
 window.openChat = function(username) {
 
@@ -723,19 +859,10 @@ window.openChat = function(username) {
       username.charAt(0).toUpperCase();
 
 
-  /* статус */
-
-  checkChatStatus(username);
-
-
-  /* очищаем старый чат */
-
   document
     .getElementById("chat")
     .innerHTML = "";
 
-
-  /* отключаем старый listener */
 
   if (messageListener) {
 
@@ -752,40 +879,12 @@ window.openChat = function(username) {
   messageListener = selectedChat;
 
 
-  const messagesRef =
+  onValue(
     ref(
       db,
-      "chats/" + selectedChat
-    );
-
-
-  onChildAdded(
-    messagesRef,
-    snapshot => {
-
-      const message =
-        snapshot.val();
-
-      showMessage(message);
-
-    }
-  );
-
-};
-
-
-/* =====================================================
-   СТАТУС ПОЛЬЗОВАТЕЛЯ
-===================================================== */
-
-function checkChatStatus(username) {
-
-  const key =
-    userKey(username);
-
-
-  onValue(
-    ref(db, "online/" + key),
+      "online/" +
+      userKey(username)
+    ),
     snapshot => {
 
       const status =
@@ -793,37 +892,53 @@ function checkChatStatus(username) {
           "chatStatus"
         );
 
-      if (!status) return;
+      if (
+        snapshot.val() === true
+      ) {
 
+        status.textContent =
+          "🟢 в сети";
 
-      if (snapshot.val() === true) {
-
-        status.textContent = "🟢 в сети";
-
-        status.style.color = "#35d07f";
+        status.style.color =
+          "#35d07f";
 
       } else {
 
         status.textContent =
           "был(а) недавно";
 
-        status.style.color = "#8495a0";
+        status.style.color =
+          "#8495a0";
 
       }
 
     }
   );
 
-}
+
+  onChildAdded(
+    ref(
+      db,
+      "chats/" + selectedChat
+    ),
+    snapshot => {
+
+      showMessage(
+        snapshot.val()
+      );
+
+    }
+  );
+
+};
 
 
-/* =====================================================
-   ПОКАЗ СООБЩЕНИЯ
-===================================================== */
+/* ================= SHOW MESSAGE ================= */
 
 function showMessage(m) {
 
-  if (!m) return;
+  if (!m)
+    return;
 
 
   const chat =
@@ -897,7 +1012,7 @@ function showMessage(m) {
       ${
         my
         ?
-        `<span>✔✔</span>`
+        "<span>✔✔</span>"
         :
         ""
       }
@@ -911,31 +1026,28 @@ function showMessage(m) {
 
   chat.appendChild(row);
 
-
   chat.scrollTop =
     chat.scrollHeight;
 
 }
 
 
-/* =====================================================
-   ОТПРАВИТЬ СООБЩЕНИЕ
-===================================================== */
+/* ================= SEND ================= */
 
 window.sendMessage = function() {
 
   const input =
     document.getElementById("msg");
 
-
   const text =
     input.value.trim();
 
 
-  if (!text) return;
+  if (!text)
+    return;
 
-
-  if (!selectedUser) return;
+  if (!selectedUser)
+    return;
 
 
   push(
@@ -966,9 +1078,7 @@ window.sendMessage = function() {
 };
 
 
-/* =====================================================
-   ENTER = ОТПРАВИТЬ
-===================================================== */
+/* ================= ENTER ================= */
 
 document
   .getElementById("msg")
@@ -977,8 +1087,7 @@ document
     event => {
 
       if (
-        event.key === "Enter" &&
-        !event.shiftKey
+        event.key === "Enter"
       ) {
 
         event.preventDefault();
@@ -991,16 +1100,13 @@ document
   );
 
 
-/* =====================================================
-   НАЗАД К КОНТАКТАМ
-===================================================== */
+/* ================= CONTACTS ================= */
 
 window.openContacts = function() {
 
   document
     .getElementById("chatScreen")
     .style.display = "none";
-
 
   document
     .getElementById("contactsScreen")
@@ -1019,9 +1125,7 @@ window.openContacts = function() {
 };
 
 
-/* =====================================================
-   ОБНОВЛЕНИЕ СТАТУСА ПРИ ЗАКРЫТИИ
-===================================================== */
+/* ================= OFFLINE ================= */
 
 window.addEventListener(
   "beforeunload",
