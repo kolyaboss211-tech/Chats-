@@ -53,25 +53,26 @@ input {
 /* ================= HEADER ================= */
 
 .header {
-  height: 54px;
-  min-height: 54px;
+  height: 52px;
+  min-height: 52px;
   background: #202b36;
   display: flex;
   align-items: center;
-  padding: 0 8px;
-  gap: 8px;
+  padding: 0 7px;
+  gap: 7px;
   flex-shrink: 0;
 }
 
 .header button {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border: none;
   background: transparent;
   color: white;
-  font-size: 24px;
+  font-size: 22px;
   cursor: pointer;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .header button:active {
@@ -79,14 +80,14 @@ input {
 }
 
 .header-title {
-  font-size: 17px;
+  font-size: 16px;
   font-weight: bold;
 }
 
 .header-status {
-  font-size: 11px;
+  font-size: 10px;
   color: #8b9ba5;
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 /* ================= CONTACTS ================= */
@@ -100,18 +101,18 @@ input {
 }
 
 .search {
-  padding: 7px;
+  padding: 6px;
   background: #17212b;
   flex-shrink: 0;
 }
 
 .search input {
   width: 100%;
-  height: 38px;
+  height: 36px;
   border: none;
   outline: none;
-  border-radius: 20px;
-  padding: 0 13px;
+  border-radius: 18px;
+  padding: 0 12px;
   background: #263544;
   color: white;
   font-size: 14px;
@@ -131,9 +132,9 @@ input {
 .contact {
   display: flex;
   align-items: center;
-  padding: 8px 11px;
+  padding: 7px 10px;
   cursor: pointer;
-  border-bottom: 1px solid rgba(255,255,255,.04);
+  border-bottom: 1px solid rgba(255,255,255,.035);
 }
 
 .contact:active {
@@ -141,16 +142,16 @@ input {
 }
 
 .avatar {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: #2ea6ff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: bold;
-  margin-right: 10px;
+  margin-right: 9px;
   flex-shrink: 0;
 }
 
@@ -159,7 +160,7 @@ input {
 }
 
 .contact-name {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   white-space: nowrap;
   overflow: hidden;
@@ -168,7 +169,7 @@ input {
 
 .contact-status {
   margin-top: 2px;
-  font-size: 11px;
+  font-size: 10px;
   color: #8495a0;
 }
 
@@ -179,8 +180,8 @@ input {
 .empty {
   text-align: center;
   color: #82909a;
-  padding: 30px 15px;
-  font-size: 14px;
+  padding: 28px 15px;
+  font-size: 13px;
 }
 
 /* ================= CHAT ================= */
@@ -194,10 +195,10 @@ input {
 }
 
 .chat-header-avatar {
-  width: 34px !important;
-  height: 34px !important;
+  width: 32px !important;
+  height: 32px !important;
   margin: 0 !important;
-  font-size: 16px !important;
+  font-size: 15px !important;
 }
 
 /* ================= MESSAGES ================= */
@@ -206,13 +207,13 @@ input {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding: 7px 6px 8px;
+  padding: 6px 5px 7px;
   -webkit-overflow-scrolling: touch;
 }
 
 .message-row {
   display: flex;
-  margin: 4px 2px;
+  margin: 3px 1px;
 }
 
 .message-row.my {
@@ -224,11 +225,11 @@ input {
 }
 
 .message {
-  max-width: 80%;
-  padding: 6px 9px;
-  border-radius: 14px;
+  max-width: 82%;
+  padding: 5px 8px;
+  border-radius: 13px;
   word-break: break-word;
-  box-shadow: 0 1px 4px rgba(0,0,0,.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,.18);
 }
 
 .message.my {
@@ -243,13 +244,13 @@ input {
 
 .message-name {
   color: #7ed0ff;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: bold;
   margin-bottom: 2px;
 }
 
 .message-text {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.3;
   white-space: pre-wrap;
 }
@@ -260,18 +261,23 @@ input {
   align-items: center;
   gap: 3px;
   margin-top: 2px;
-  font-size: 9px;
+  font-size: 8px;
   color: rgba(255,255,255,.72);
+}
+
+.ticks {
+  color: rgba(255,255,255,.85);
+  font-size: 10px;
 }
 
 /* ================= IMAGE ================= */
 
 .chat-image {
   display: block;
-  max-width: min(220px, 70vw);
+  max-width: min(230px, 68vw);
   max-height: 280px;
   border-radius: 9px;
-  margin-top: 1px;
+  margin: 0;
   cursor: pointer;
 }
 
@@ -281,25 +287,25 @@ input {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 4px 0;
+  padding: 3px 0;
   text-decoration: none;
   color: white;
 }
 
 .file-icon {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 8px;
   background: rgba(255,255,255,.16);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 19px;
+  font-size: 18px;
   flex-shrink: 0;
 }
 
 .file-name {
-  font-size: 13px;
+  font-size: 12px;
   max-width: 170px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -310,24 +316,24 @@ input {
 
 .input-area {
   width: 100%;
-  min-height: 55px;
-  padding: 5px 6px;
+  min-height: 53px;
+  padding: 5px 5px;
   padding-bottom: max(5px, env(safe-area-inset-bottom));
   background: #202b36;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   flex-shrink: 0;
 }
 
 .file-button {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border: none;
   border-radius: 50%;
   background: transparent;
   color: #aebbc5;
-  font-size: 21px;
+  font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -342,14 +348,14 @@ input {
 #msg {
   flex: 1;
   min-width: 0;
-  height: 40px;
+  height: 38px;
   border: none;
   outline: none;
-  border-radius: 20px;
-  padding: 0 13px;
+  border-radius: 19px;
+  padding: 0 12px;
   background: #263544;
   color: white;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 #msg::placeholder {
@@ -357,13 +363,13 @@ input {
 }
 
 .send {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border: none;
   border-radius: 50%;
   background: #2ea6ff;
   color: white;
-  font-size: 18px;
+  font-size: 17px;
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -381,7 +387,7 @@ input {
 #uploadStatus {
   position: fixed;
   left: 50%;
-  bottom: 65px;
+  bottom: 63px;
   transform: translateX(-50%);
   background: #202b36;
   color: white;
@@ -399,15 +405,15 @@ input {
 #errorBox {
   display: none;
   position: fixed;
-  left: 10px;
-  right: 10px;
-  top: 65px;
+  left: 8px;
+  right: 8px;
+  top: 60px;
   z-index: 3000;
   background: #8b2635;
   color: white;
-  padding: 10px 12px;
-  border-radius: 10px;
-  font-size: 13px;
+  padding: 9px 11px;
+  border-radius: 9px;
+  font-size: 12px;
   line-height: 1.35;
 }
 
@@ -417,7 +423,7 @@ input {
   position: fixed;
   top: 0;
   left: 0;
-  width: 270px;
+  width: 260px;
   max-width: 82vw;
   height: 100dvh;
   background: #202b36;
@@ -444,40 +450,40 @@ input {
 }
 
 .menuProfile {
-  height: 125px;
-  padding: 18px;
+  height: 115px;
+  padding: 16px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 11px;
   background: #17212b;
 }
 
 .menuAvatar {
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: #2ea6ff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
 }
 
 .menuName {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
 }
 
 .menuOnline {
-  margin-top: 4px;
-  font-size: 11px;
+  margin-top: 3px;
+  font-size: 10px;
   color: #35d07f;
 }
 
 .menuItem {
-  padding: 14px 18px;
-  font-size: 15px;
+  padding: 13px 17px;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -494,30 +500,30 @@ input {
   }
 
   .chat-image {
-    max-width: 205px;
-    max-height: 270px;
+    max-width: 210px;
+    max-height: 260px;
   }
 }
 
 @media (max-height: 650px) {
 
   .header {
-    height: 50px;
-    min-height: 50px;
+    height: 49px;
+    min-height: 49px;
   }
 
   .input-area {
-    min-height: 50px;
+    min-height: 49px;
   }
 
   #msg {
-    height: 36px;
+    height: 35px;
   }
 
   .send,
   .file-button {
-    width: 36px;
-    height: 36px;
+    width: 35px;
+    height: 35px;
   }
 }
 
@@ -663,8 +669,7 @@ input {
 
 import {
   initializeApp
-} from
-"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
 import {
   getDatabase,
@@ -675,16 +680,14 @@ import {
   onChildAdded,
   onDisconnect,
   off
-} from
-"https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 import {
   getStorage,
   ref as storageRef,
   uploadBytes,
   getDownloadURL
-} from
-"https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 
 /* ================= FIREBASE ================= */
@@ -713,14 +716,11 @@ const firebaseConfig = {
   "https://chats-2e309-default-rtdb.firebaseio.com"
 };
 
-const app =
-  initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const db =
-  getDatabase(app);
+const db = getDatabase(app);
 
-const storage =
-  getStorage(app);
+const storage = getStorage(app);
 
 
 /* ================= ERROR ================= */
@@ -735,13 +735,11 @@ function showError(message) {
   box.textContent =
     "⚠️ " + message;
 
-  box.style.display =
-    "block";
+  box.style.display = "block";
 
   setTimeout(() => {
 
-    box.style.display =
-      "none";
+    box.style.display = "none";
 
   }, 7000);
 }
@@ -749,13 +747,11 @@ function showError(message) {
 
 /* ================= NICK ================= */
 
-let n =
-  localStorage.getItem("n");
+let n = localStorage.getItem("n");
 
 if (!n) {
 
-  n =
-    prompt("Твой ник:");
+  n = prompt("Твой ник:");
 
   if (!n || !n.trim()) {
 
@@ -766,20 +762,15 @@ if (!n) {
       );
   }
 
-  n =
-    n.trim();
+  n = n.trim();
 
-  localStorage.setItem(
-    "n",
-    n
-  );
+  localStorage.setItem("n", n);
 }
 
 
 /* ================= MENU ================= */
 
-window.openMenu =
-function() {
+window.openMenu = function() {
 
   document
     .getElementById("sideMenu")
@@ -800,8 +791,7 @@ function() {
 };
 
 
-window.closeMenu =
-function() {
+window.closeMenu = function() {
 
   document
     .getElementById("sideMenu")
@@ -825,14 +815,10 @@ function userKey(name) {
 
 /* ================= MY USER ================= */
 
-const myKey =
-  userKey(n);
+const myKey = userKey(n);
 
 set(
-  ref(
-    db,
-    "users/" + myKey
-  ),
+  ref(db, "users/" + myKey),
   {
     name: n,
     created: Date.now()
@@ -850,15 +836,9 @@ set(
 /* ================= ONLINE ================= */
 
 const onlineRef =
-  ref(
-    db,
-    "online/" + myKey
-  );
+  ref(db, "online/" + myKey);
 
-set(
-  onlineRef,
-  true
-).catch(error => {
+set(onlineRef, true).catch(error => {
 
   showError(
     "Ошибка статуса онлайн: " +
@@ -867,9 +847,7 @@ set(
 
 });
 
-onDisconnect(
-  onlineRef
-).remove();
+onDisconnect(onlineRef).remove();
 
 
 /* ================= CONTACTS ================= */
@@ -929,22 +907,20 @@ function renderContacts() {
   container.innerHTML = "";
 
   const users =
-    Object.values(
-      contactsData
-    )
-    .filter(user => {
+    Object.values(contactsData)
+      .filter(user => {
 
-      if (!user || !user.name)
-        return false;
+        if (!user || !user.name)
+          return false;
 
-      if (user.name === n)
-        return false;
+        if (user.name === n)
+          return false;
 
-      return user.name
-        .toLowerCase()
-        .includes(search);
+        return user.name
+          .toLowerCase()
+          .includes(search);
 
-    });
+      });
 
 
   document
@@ -978,8 +954,7 @@ function renderContacts() {
     const div =
       document.createElement("div");
 
-    div.className =
-      "contact";
+    div.className = "contact";
 
     div.innerHTML = `
 
@@ -1014,15 +989,10 @@ function renderContacts() {
     container.appendChild(div);
 
 
-    /* Только один listener на пользователя */
-
     if (!contactStatusListeners[key]) {
 
       const statusRef =
-        ref(
-          db,
-          "online/" + key
-        );
+        ref(db, "online/" + key);
 
       contactStatusListeners[key] =
         onValue(
@@ -1038,26 +1008,21 @@ function renderContacts() {
             if (!status)
               return;
 
-            if (
-              snapshot.val() === true
-            ) {
+            if (snapshot.val() === true) {
 
               status.textContent =
                 "🟢 в сети";
 
-              status.classList.add(
-                "online"
-              );
+              status.classList.add("online");
 
             } else {
 
               status.textContent =
                 "был(а) недавно";
 
-              status.classList.remove(
-                "online"
-              );
+              status.classList.remove("online");
             }
+
           }
         );
     }
@@ -1083,39 +1048,21 @@ function escapeHTML(text) {
 
   return String(text)
 
-    .replaceAll(
-      "&",
-      "&amp;"
-    )
+    .replaceAll("&", "&amp;")
 
-    .replaceAll(
-      "<",
-      "&lt;"
-    )
+    .replaceAll("<", "&lt;")
 
-    .replaceAll(
-      ">",
-      "&gt;"
-    )
+    .replaceAll(">", "&gt;")
 
-    .replaceAll(
-      '"',
-      "&quot;"
-    )
+    .replaceAll('"', "&quot;")
 
-    .replaceAll(
-      "'",
-      "&#039;"
-    );
+    .replaceAll("'", "&#039;");
 }
 
 
 /* ================= CHAT ID ================= */
 
-function chatId(
-  user1,
-  user2
-) {
+function chatId(user1, user2) {
 
   const users = [
 
@@ -1133,4 +1080,272 @@ function chatId(
 }
 
 
+/* ================= CHAT VARIABLES ================= */
+
+let selectedUser = null;
+
+let selectedChat = null;
+
+let messageListener = null;
+
+let statusListener = null;
+
+
 /* ================= OPEN CHAT ================= */
+
+window.openChat = function(username) {
+
+  selectedUser = username;
+
+  selectedChat =
+    chatId(n, username);
+
+
+  document
+    .getElementById("contactsScreen")
+    .style.display = "none";
+
+  document
+    .getElementById("chatScreen")
+    .style.display = "flex";
+
+
+  document
+    .getElementById("chatName")
+    .textContent = username;
+
+
+  document
+    .getElementById("chatAvatar")
+    .textContent =
+    username
+      .charAt(0)
+      .toUpperCase();
+
+
+  document
+    .getElementById("chat")
+    .innerHTML = "";
+
+
+  if (messageListener) {
+
+    off(
+      ref(
+        db,
+        "chats/" +
+        messageListener
+      )
+    );
+
+  }
+
+
+  if (statusListener) {
+
+    off(
+      ref(
+        db,
+        "online/" +
+        statusListener
+      )
+    );
+
+  }
+
+
+  messageListener = selectedChat;
+
+  statusListener = userKey(username);
+
+
+  /* ================= ONLINE STATUS ================= */
+
+  onValue(
+
+    ref(
+      db,
+      "online/" +
+      statusListener
+    ),
+
+    snapshot => {
+
+      const status =
+        document.getElementById(
+          "chatStatus"
+        );
+
+      if (!status)
+        return;
+
+      if (snapshot.val() === true) {
+
+        status.textContent =
+          "🟢 в сети";
+
+        status.style.color =
+          "#35d07f";
+
+      } else {
+
+        status.textContent =
+          "был(а) недавно";
+
+        status.style.color =
+          "#8495a0";
+      }
+
+    },
+
+    error => {
+
+      console.error(
+        "Status error:",
+        error
+      );
+
+    }
+
+  );
+
+
+  /* ================= MESSAGES ================= */
+
+  onChildAdded(
+
+    ref(
+      db,
+      "chats/" +
+      selectedChat
+    ),
+
+    snapshot => {
+
+      showMessage(
+        snapshot.val()
+      );
+
+    },
+
+    error => {
+
+      showError(
+        "Ошибка загрузки сообщений: " +
+        error.message
+      );
+
+    }
+
+  );
+
+};
+
+
+/* ================= SHOW MESSAGE ================= */
+
+function showMessage(m) {
+
+  if (!m)
+    return;
+
+
+  const chat =
+    document.getElementById("chat");
+
+
+  const my =
+    m.from === n;
+
+
+  const row =
+    document.createElement("div");
+
+  row.className =
+    "message-row " +
+    (my ? "my" : "other");
+
+
+  const bubble =
+    document.createElement("div");
+
+  bubble.className =
+    "message " +
+    (my ? "my" : "other");
+
+
+  let content = "";
+
+
+  /* ================= IMAGE ================= */
+
+  if (
+    m.type === "image" &&
+    m.url
+  ) {
+
+    content = `
+      <img
+        src="${escapeHTML(m.url)}"
+        class="chat-image"
+        loading="lazy"
+        onclick="window.open(
+          '${escapeHTML(m.url)}',
+          '_blank'
+        )">
+    `;
+
+  }
+
+
+  /* ================= FILE ================= */
+
+  else if (
+    m.type === "file" &&
+    m.url
+  ) {
+
+    content = `
+      <a
+        href="${escapeHTML(m.url)}"
+        target="_blank"
+        rel="noopener"
+        class="file-message">
+
+        <div class="file-icon">
+          📄
+        </div>
+
+        <div class="file-name">
+          ${escapeHTML(
+            m.fileName || "Файл"
+          )}
+        </div>
+
+      </a>
+    `;
+
+  }
+
+
+  /* ================= TEXT ================= */
+
+  else {
+
+    content = `
+      <div class="message-text">
+        ${escapeHTML(
+          m.text || ""
+        )}
+      </div>
+    `;
+
+  }
+
+
+  bubble.innerHTML = `
+
+    ${
+      !my
+      ? `
+        <div class="message-na
