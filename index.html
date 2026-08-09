@@ -1,168 +1,1415 @@
 <!DOCTYPE html>
-<html>
-<body style="
-margin:0;
-background:#17212b;
-font-family:Arial,sans-serif;
-color:white;
-">
+<html lang="ru">
+<head>
 
-<div id="chat"
-style="
-height:85vh;
-overflow-y:auto;
-font-size:13px;
-font-weight:600;
-box-sizing:border-box;
-scroll-behavior:smooth;
-">
-</div>
-<input type="file" id="photo" accept="image/*">
-<div style="
-display:flex;
-font-size:28px;
-opacity:.7;
-background:#202b36;">
- <input
-id="msg"
-placeholder="Написать сообщение..."
-style="
-flex:1;
-font-size:16px;
-line-height:1.4;
-border:none;
-outline:none;
-border-radius:25px;
-font-size:16px;
-font-weight:600;
-background:#263544;
-color:white;
-">
-  <button onclick="s()"
-  style="
-  margin-left:8px;
-  width:48px;
-  border:none;
-  border-radius:50%;
-  background:#2ea6ff;
-  color:white;
-  font-size:20px;">
-  ➤
-  </button>
-</div>
+<meta name="google-site-verification"
+content="6aurhX9vInCZ4yKrT6Z5YNQnNAgeRvNkLsejYXR90K4">
 
-<script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getDatabase,
-  ref,
-  push,
-  onChildAdded,
-  set,
-  remove
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+<meta charset="UTF-8">
 
-const app = initializeApp({
-  apiKey: "AIzaSyAVsq99vOv_H3QxukyZBFEzb4zR1J5ha68",
-  authDomain: "chats-2e309.firebaseapp.com",
-  projectId: "chats-2e309",
-  storageBucket: "chats-2e309.firebasestorage.app",
-  messagingSenderId: "888879915328",
-  appId: "1:888879915328:web:ece055c1794243915c9aa5",
-  databaseURL: "https://chats-2e309-default-rtdb.firebaseio.com"
-});
-const db = getDatabase(app);
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-let n = localStorage.getItem("n");
+<title>NicChat — онлайн-чат</title>
 
+<meta name="description"
+content="NicChat — бесплатный онлайн-чат для общения с друзьями и контактами.">
 
+<style>
 
-set(ref(db, "online/" + n), true);
-
-window.addEventListener("beforeunload", () => {
-  remove(ref(db, "online/" + n));
-});
-if(!n){
-  n=prompt("Твой ник:");
-  localStorage.setItem("n",n);
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
-window.s = function () {
-  if (!msg.value.trim()) return;
-
-  push(ref(db, "m"), {
-    n: n,
-    t: msg.value,
-    time: Date.now(),
-    read: false
-  });
-
-  msg.value = "";
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-onChildAdded(ref(db, "m"), d => {
-  const m = d.val();
+body {
+  background: #17212b;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
 
-  const date = new Date(m.time || Date.now());
-  const h = String(date.getHours()).padStart(2, "0");
-  const min = String(date.getMinutes()).padStart(2, "0");
+button,
+input {
+  font-family: Arial, sans-serif;
+}
 
-  const my = m.n === n;
+.app {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
-  chat.innerHTML += `
-  <div style="
-    display:flex;
-    justify-content:${my ? "flex-end" : "flex-start"};
-    margin:8px;
-  ">
-  
-    <div style="
-      background:${my ? "#2ea6ff" : "#2b2b2b"};
-      color:white;
-      padding:10px 14px;
-      border-radius:18px;
-      max-width:75%;
-      word-break:break-word;
-      box-shadow:0 2px 6px rgba(0,0,0,.3);
-      font-size:30px;
-      line-height:1.4;
-">
+/* ================= HEADER ================= */
 
-      <div style="
-        font-size:30px;
-        font-weight:700;
-        color:${my ? "#ffffff" : "#8fd3ff"};
-        margin-bottom:4px;
-">
-      
-        ${m.n}
+.header {
+  height: 54px;
+  min-height: 54px;
+  background: #202b36;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.header button {
+  width: 38px;
+  height: 38px;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.header button:active {
+  background: rgba(255,255,255,.08);
+}
+
+.header-title {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.header-status {
+  font-size: 11px;
+  color: #8b9ba5;
+  margin-top: 2px;
+}
+
+/* ================= CONTACTS ================= */
+
+#contactsScreen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.search {
+  padding: 7px;
+  background: #17212b;
+  flex-shrink: 0;
+}
+
+.search input {
+  width: 100%;
+  height: 38px;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  padding: 0 13px;
+  background: #263544;
+  color: white;
+  font-size: 14px;
+}
+
+.search input::placeholder {
+  color: #9aa9b3;
+}
+
+#contacts {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  padding: 8px 11px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+
+.contact:active {
+  background: #263544;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #2ea6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.contact-info {
+  min-width: 0;
+}
+
+.contact-name {
+  font-size: 15px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contact-status {
+  margin-top: 2px;
+  font-size: 11px;
+  color: #8495a0;
+}
+
+.online {
+  color: #35d07f;
+}
+
+.empty {
+  text-align: center;
+  color: #82909a;
+  padding: 30px 15px;
+  font-size: 14px;
+}
+
+/* ================= CHAT ================= */
+
+#chatScreen {
+  width: 100%;
+  height: 100%;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-header-avatar {
+  width: 34px !important;
+  height: 34px !important;
+  margin: 0 !important;
+  font-size: 16px !important;
+}
+
+/* ================= MESSAGES ================= */
+
+#chat {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 7px 6px 8px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.message-row {
+  display: flex;
+  margin: 4px 2px;
+}
+
+.message-row.my {
+  justify-content: flex-end;
+}
+
+.message-row.other {
+  justify-content: flex-start;
+}
+
+.message {
+  max-width: 80%;
+  padding: 6px 9px;
+  border-radius: 14px;
+  word-break: break-word;
+  box-shadow: 0 1px 4px rgba(0,0,0,.2);
+}
+
+.message.my {
+  background: #2ea6ff;
+  border-bottom-right-radius: 4px;
+}
+
+.message.other {
+  background: #2b3945;
+  border-bottom-left-radius: 4px;
+}
+
+.message-name {
+  color: #7ed0ff;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.message-text {
+  font-size: 15px;
+  line-height: 1.3;
+  white-space: pre-wrap;
+}
+
+.message-bottom {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 3px;
+  margin-top: 2px;
+  font-size: 9px;
+  color: rgba(255,255,255,.72);
+}
+
+/* ================= IMAGE ================= */
+
+.chat-image {
+  display: block;
+  max-width: min(220px, 70vw);
+  max-height: 280px;
+  border-radius: 9px;
+  margin-top: 1px;
+  cursor: pointer;
+}
+
+/* ================= FILE ================= */
+
+.file-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  text-decoration: none;
+  color: white;
+}
+
+.file-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255,255,255,.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.file-name {
+  font-size: 13px;
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ================= INPUT ================= */
+
+.input-area {
+  width: 100%;
+  min-height: 55px;
+  padding: 5px 6px;
+  padding-bottom: max(5px, env(safe-area-inset-bottom));
+  background: #202b36;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.file-button {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #aebbc5;
+  font-size: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.file-button:active {
+  background: rgba(255,255,255,.08);
+}
+
+#msg {
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  padding: 0 13px;
+  background: #263544;
+  color: white;
+  font-size: 15px;
+}
+
+#msg::placeholder {
+  color: #9aa9b3;
+}
+
+.send {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: #2ea6ff;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.send:active {
+  transform: scale(.94);
+}
+
+#fileInput {
+  display: none;
+}
+
+/* ================= UPLOAD ================= */
+
+#uploadStatus {
+  position: fixed;
+  left: 50%;
+  bottom: 65px;
+  transform: translateX(-50%);
+  background: #202b36;
+  color: white;
+  padding: 8px 13px;
+  border-radius: 17px;
+  font-size: 12px;
+  display: none;
+  z-index: 2000;
+  box-shadow: 0 3px 15px rgba(0,0,0,.4);
+  white-space: nowrap;
+}
+
+/* ================= ERROR ================= */
+
+#errorBox {
+  display: none;
+  position: fixed;
+  left: 10px;
+  right: 10px;
+  top: 65px;
+  z-index: 3000;
+  background: #8b2635;
+  color: white;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* ================= MENU ================= */
+
+#sideMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 270px;
+  max-width: 82vw;
+  height: 100dvh;
+  background: #202b36;
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform .25s ease;
+  box-shadow: 4px 0 15px rgba(0,0,0,.4);
+}
+
+#sideMenu.open {
+  transform: translateX(0);
+}
+
+#menuOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 999;
+  display: none;
+}
+
+#menuOverlay.open {
+  display: block;
+}
+
+.menuProfile {
+  height: 125px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #17212b;
+}
+
+.menuAvatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #2ea6ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.menuName {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.menuOnline {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #35d07f;
+}
+
+.menuItem {
+  padding: 14px 18px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.menuItem:active {
+  background: #263544;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 600px) {
+
+  .message {
+    max-width: 84%;
+  }
+
+  .chat-image {
+    max-width: 205px;
+    max-height: 270px;
+  }
+}
+
+@media (max-height: 650px) {
+
+  .header {
+    height: 50px;
+    min-height: 50px;
+  }
+
+  .input-area {
+    min-height: 50px;
+  }
+
+  #msg {
+    height: 36px;
+  }
+
+  .send,
+  .file-button {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="menuOverlay" onclick="closeMenu()"></div>
+
+<div id="sideMenu">
+
+  <div class="menuProfile">
+
+    <div class="menuAvatar" id="menuAvatar">?</div>
+
+    <div>
+      <div class="menuName" id="menuName">Пользователь</div>
+      <div class="menuOnline">🟢 онлайн</div>
+    </div>
+
+  </div>
+
+  <div class="menuItem" onclick="closeMenu()">
+    👤 &nbsp; Мой профиль
+  </div>
+
+  <div class="menuItem" onclick="openContacts(); closeMenu()">
+    💬 &nbsp; Контакты
+  </div>
+
+  <div class="menuItem">
+    ⚙️ &nbsp; Настройки
+  </div>
+
+</div>
+
+<div id="uploadStatus">
+  ⏳ Загрузка файла...
+</div>
+
+<div id="errorBox"></div>
+
+<div class="app">
+
+  <!-- ================= CONTACTS ================= -->
+
+  <div id="contactsScreen">
+
+    <div class="header">
+
+      <button onclick="openMenu()">☰</button>
+
+      <div>
+
+        <div class="header-title">
+          NicChat
+        </div>
+
+        <div class="header-status" id="usersCount">
+          Подключение...
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="search">
+
+      <input
+        id="search"
+        placeholder="🔎 Поиск"
+        autocomplete="off">
+
+    </div>
+
+    <div id="contacts"></div>
+
+  </div>
+
+  <!-- ================= CHAT ================= -->
+
+  <div id="chatScreen">
+
+    <div class="header">
+
+      <button onclick="openContacts()">←</button>
+
+      <div
+        class="avatar chat-header-avatar"
+        id="chatAvatar">
+        ?
       </div>
 
       <div>
-        ${m.t}
+
+        <div class="header-title" id="chatName">
+          Чат
+        </div>
+
+        <div class="header-status" id="chatStatus">
+          ...
+        </div>
+
       </div>
 
-      <div style="
-display:flex;
-justify-content:flex-end;
-align-items:center;
-gap:4px;
-font-size:11px;
-color:#dfefff;
-margin-top:6px;
-">
-<span>${h}:${min}</span>
-<span>${my ? "✔✔" : ""}</span>
-</div>
+    </div>
+
+    <div id="chat"></div>
+
+    <div class="input-area">
+
+      <button
+        class="file-button"
+        onclick="chooseFile()"
+        title="Фото или файл">
+        📎
+      </button>
+
+      <input
+        type="file"
+        id="fileInput"
+        accept="image/*,.pdf,.txt,.doc,.docx,.xls,.xlsx,.zip">
+
+      <input
+        id="msg"
+        placeholder="Сообщение..."
+        autocomplete="off">
+
+      <button
+        class="send"
+        onclick="sendMessage()">
+        ➤
+      </button>
 
     </div>
 
   </div>
-  `;
 
-  chat.scrollTop = chat.scrollHeight;
+</div>
+
+<script type="module">
+
+import {
+  initializeApp
+} from
+"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  push,
+  set,
+  onValue,
+  onChildAdded,
+  onDisconnect,
+  off
+} from
+"https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+import {
+  getStorage,
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL
+} from
+"https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
+
+/* ================= FIREBASE ================= */
+
+const firebaseConfig = {
+
+  apiKey:
+  "AIzaSyAVsq99vOv_H3QxukyZBFEzb4zR1J5ha68",
+
+  authDomain:
+  "chats-2e309.firebaseapp.com",
+
+  projectId:
+  "chats-2e309",
+
+  storageBucket:
+  "chats-2e309.firebasestorage.app",
+
+  messagingSenderId:
+  "888879915328",
+
+  appId:
+  "1:888879915328:web:ece055c1794243915c9aa5",
+
+  databaseURL:
+  "https://chats-2e309-default-rtdb.firebaseio.com"
+};
+
+const app =
+  initializeApp(firebaseConfig);
+
+const db =
+  getDatabase(app);
+
+const storage =
+  getStorage(app);
+
+
+/* ================= ERROR ================= */
+
+function showError(message) {
+
+  console.error(message);
+
+  const box =
+    document.getElementById("errorBox");
+
+  box.textContent =
+    "⚠️ " + message;
+
+  box.style.display =
+    "block";
+
+  setTimeout(() => {
+
+    box.style.display =
+      "none";
+
+  }, 7000);
+}
+
+
+/* ================= NICK ================= */
+
+let n =
+  localStorage.getItem("n");
+
+if (!n) {
+
+  n =
+    prompt("Твой ник:");
+
+  if (!n || !n.trim()) {
+
+    n =
+      "User" +
+      Math.floor(
+        Math.random() * 99999
+      );
+  }
+
+  n =
+    n.trim();
+
+  localStorage.setItem(
+    "n",
+    n
+  );
+}
+
+
+/* ================= MENU ================= */
+
+window.openMenu =
+function() {
+
+  document
+    .getElementById("sideMenu")
+    .classList.add("open");
+
+  document
+    .getElementById("menuOverlay")
+    .classList.add("open");
+
+  document
+    .getElementById("menuName")
+    .textContent = n;
+
+  document
+    .getElementById("menuAvatar")
+    .textContent =
+    n.charAt(0).toUpperCase();
+};
+
+
+window.closeMenu =
+function() {
+
+  document
+    .getElementById("sideMenu")
+    .classList.remove("open");
+
+  document
+    .getElementById("menuOverlay")
+    .classList.remove("open");
+};
+
+
+/* ================= USER KEY ================= */
+
+function userKey(name) {
+
+  return encodeURIComponent(
+    String(name)
+  );
+}
+
+
+/* ================= MY USER ================= */
+
+const myKey =
+  userKey(n);
+
+set(
+  ref(
+    db,
+    "users/" + myKey
+  ),
+  {
+    name: n,
+    created: Date.now()
+  }
+).catch(error => {
+
+  showError(
+    "Не удалось записать пользователя: " +
+    error.message
+  );
+
 });
-</script>
 
-</body>
-</html>
+
+/* ================= ONLINE ================= */
+
+const onlineRef =
+  ref(
+    db,
+    "online/" + myKey
+  );
+
+set(
+  onlineRef,
+  true
+).catch(error => {
+
+  showError(
+    "Ошибка статуса онлайн: " +
+    error.message
+  );
+
+});
+
+onDisconnect(
+  onlineRef
+).remove();
+
+
+/* ================= CONTACTS ================= */
+
+let contactsData = {};
+
+let contactStatusListeners = {};
+
+
+onValue(
+  ref(db, "users"),
+
+  snapshot => {
+
+    contactsData =
+      snapshot.val() || {};
+
+    renderContacts();
+
+    document
+      .getElementById("usersCount")
+      .textContent =
+      "Контакты загружены";
+
+  },
+
+  error => {
+
+    showError(
+      "Firebase не разрешил чтение пользователей: " +
+      error.message
+    );
+
+    document
+      .getElementById("usersCount")
+      .textContent =
+      "Ошибка подключения";
+
+  }
+);
+
+
+/* ================= RENDER CONTACTS ================= */
+
+function renderContacts() {
+
+  const container =
+    document.getElementById("contacts");
+
+  const search =
+    document
+      .getElementById("search")
+      .value
+      .toLowerCase()
+      .trim();
+
+  container.innerHTML = "";
+
+  const users =
+    Object.values(
+      contactsData
+    )
+    .filter(user => {
+
+      if (!user || !user.name)
+        return false;
+
+      if (user.name === n)
+        return false;
+
+      return user.name
+        .toLowerCase()
+        .includes(search);
+
+    });
+
+
+  document
+    .getElementById("usersCount")
+    .textContent =
+    users.length +
+    (
+      users.length === 1
+      ? " пользователь"
+      : " пользователей"
+    );
+
+
+  if (!users.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        Нет контактов
+      </div>
+    `;
+
+    return;
+  }
+
+
+  users.forEach(user => {
+
+    const key =
+      userKey(user.name);
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "contact";
+
+    div.innerHTML = `
+
+      <div class="avatar">
+        ${escapeHTML(
+          user.name
+            .charAt(0)
+            .toUpperCase()
+        )}
+      </div>
+
+      <div class="contact-info">
+
+        <div class="contact-name">
+          ${escapeHTML(user.name)}
+        </div>
+
+        <div
+          class="contact-status"
+          id="status-${key}">
+          проверка...
+        </div>
+
+      </div>
+    `;
+
+
+    div.onclick =
+      () => openChat(user.name);
+
+
+    container.appendChild(div);
+
+
+    /* Только один listener на пользователя */
+
+    if (!contactStatusListeners[key]) {
+
+      const statusRef =
+        ref(
+          db,
+          "online/" + key
+        );
+
+      contactStatusListeners[key] =
+        onValue(
+          statusRef,
+
+          snapshot => {
+
+            const status =
+              document.getElementById(
+                "status-" + key
+              );
+
+            if (!status)
+              return;
+
+            if (
+              snapshot.val() === true
+            ) {
+
+              status.textContent =
+                "🟢 в сети";
+
+              status.classList.add(
+                "online"
+              );
+
+            } else {
+
+              status.textContent =
+                "был(а) недавно";
+
+              status.classList.remove(
+                "online"
+              );
+            }
+          }
+        );
+    }
+
+  });
+
+}
+
+
+/* ================= SEARCH ================= */
+
+document
+  .getElementById("search")
+  .addEventListener(
+    "input",
+    renderContacts
+  );
+
+
+/* ================= ESCAPE ================= */
+
+function escapeHTML(text) {
+
+  return String(text)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+}
+
+
+/* ================= CHAT ID ================= */
+
+function chatId(
+  user1,
+  user2
+) {
+
+  const users = [
+
+    userKey(user1),
+
+    userKey(user2)
+
+  ].sort();
+
+  return (
+    users[0] +
+    "_" +
+    users[1]
+  );
+}
+
+
+/* ================= OPEN CHAT ================= */
+
+let selectedUser =
+  null;
+
+let selectedChat =
+  null;
+
+let messageListener =
+  null;
+
+let statusListener =
+  null;
+
+
+window.openChat =
+function(username) {
+
+  selectedUser =
+    username;
+
+  selectedChat =
+    chatId(
+      n,
+      username
+    );
+
+
+  document
+    .getElementById(
+      "contactsScreen"
+    )
+    .style.display =
+    "none";
+
+  document
+    .getElementById(
+      "chatScreen"
+    )
+    .style.display =
+    "flex";
+
+
+  document
+    .getElementById(
+      "chatName"
+    )
+    .textContent =
+    username;
+
+
+  document
+    .getElementById(
+      "chatAvatar"
+    )
+    .textContent =
+    username
+      .charAt(0)
+      .toUpperCase();
+
+
+  document
+    .getElementById(
+      "chat"
+    )
+    .innerHTML =
+    "";
+
+
+  /* Удаляем старый listener */
+
+  if (messageListener) {
+
+    off(
+      ref(
+        db,
+        "chats/" +
+        messageListener
+      )
+    );
+
+  }
+
+
+  if (statusListener) {
+
+    off(
+      ref(
+        db,
+        "online/" +
+        statusListener
+      )
+    );
+
+  }
+
+
+  messageListener =
+    selectedChat;
+
+  statusListener =
+    userKey(username);
+
+
+  /* ================= ONLINE STATUS ================= */
+
+  onValue(
+
+    ref(
+      db,
+      "online/" +
+      statusListener
+    ),
+
+    snapshot => {
+
+      const status =
+        document.getElementById(
+          "chatStatus"
+        );
+
+      if (!status)
+        return;
+
+      if (
+        snapshot.val() === true
+      ) {
+
+        status.textContent =
+          "🟢 в сети";
+
+        status.style.color =
+          "#35d07f";
+
+      } else {
+
+        status.textContent =
+          "был(а) недавно";
+
+        status.style.color =
+          "#8495a0";
+      }
+
+    },
+
+    error => {
+
+      console.error(
+        "Status error:",
+        error
+      );
+
+    }
+
+  );
+
+
+  /* ================= MESSAGES ================= */
+
+  onChildAdded(
+
+    ref(
+      db,
+      "chats/" +
+      selectedChat
+    ),
+
+    snapshot => {
+
+      showMessage(
+        snapshot.val()
+      );
+
+    },
+
+    error => {
+
+      showError(
+        "Ошибка загрузки сообщений: " +
+        error.message
+      );
+
+    }
+
+  );
+
+};
+
+
+/* ================= SHOW MESSAGE ================= */
+
+function showMessage(m) {
+
+  if (!m)
+    return;
+
+
+  const chat =
+    document.getElementById(
+      "chat"
+    );
+
+
+  const my =
+    m.from === n;
+
+
+  const row =
+    document.createElement(
+      "div"
+    );
+
+
+  row.className =
+    "message-row " +
+    (
+      my
+      ? "my"
+      : "other"
+    );
+
+
+  const bubble =
+    document.createElement(
+      "div"
+    );
+
+
+  bubble.className =
+    "message " +
+    (
+      my
+      ? "my"
+      : "other"
+    );
+
+
+  let content =
+    "";
+
+
+  /* ================= IMAGE ================= */
+
+  if (
+    m.type === "image" &&
+    m.url
+  ) {
+
+    content = `
+
+      <img
+        src="${escapeHTML(m.url)}"
+        class="chat-image"
+        loading="lazy"
+        onclick="window.open(
+          '${escapeHTML(m.url)}',
+          '_blank'
+        )">
+
+    `;
+
+  }
+
+
+  /* ================= FILE ================= */
+
+  else if (
+    m.type === "file" &&
+    m.url
+  ) {
+
+    content = `
+
+      <a
+        href="${escapeHTML(m.url)}"
+        target="_blank"
+        rel="noopener"
+        class="file-message">
+
+        <div
